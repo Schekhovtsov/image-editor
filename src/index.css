@@ -1,6 +1,11 @@
 body {
     margin: 0;
     padding: 0;
+    
+    * {
+      font-size: 14px;
+      font-family:'Segoe UI', Tahoma, Geneva, Verdana, sans-serif
+    }
 }
 
 #root {
@@ -14,5 +19,6 @@ body {
   --background-navbar-button-hover: #4d4d4d;
 
   --text-white: #ffffff;
+  --text-disabled: #a9a9a9;
 }
 
