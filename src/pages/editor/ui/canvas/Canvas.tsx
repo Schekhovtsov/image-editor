@@ -1,17 +1,15 @@
-import { Window } from '../../../../shared/ui/window/Window';
+import { useRef } from 'react';
 import { useEditorStore } from '../../model/slice';
 import styles from './Canvas.module.scss';
 
 export const Canvas = () => {
-    const windows = useEditorStore((state) => state.windows);
-    console.log(windows);
+    const canvas = useEditorStore((state) => state.canvas);
+
+    const canvasRef = useRef<HTMLCanvasElement>(null);
+
     return (
         <div className={styles.container}>
-            {windows['create'] && (
-                <Window title="Создать">
-                    <div>Тело</div>
-                </Window>
-            )}
+            {canvas && <canvas ref={canvasRef}></canvas>}
         </div>
     );
 };
