@@ -1,0 +1,22 @@
+.container {
+    width: 100%;
+    background-color: var(--background-navbar);
+
+    ul {
+        padding: 0;
+        margin: 0;
+
+        li {
+            color: var(--text-white);
+            list-style: none;
+            display: inline-block;
+            margin-right: 10px;
+            padding: 5px;
+
+            &:hover {
+                background-color: var(--background-navbar-button-hover);
+                cursor: pointer;
+            }
+        }
+    }
+}
