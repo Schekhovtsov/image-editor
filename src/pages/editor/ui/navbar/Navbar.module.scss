@@ -25,13 +25,17 @@
     background-color: var(--background-navbar);
     border-radius: 0 0 5px 5px;
 
-    a {
+    button {
         color: var(--text-white);
         text-decoration: none;
         padding: 4px 16px 4px 6px;
+        text-align: left;
+        background: transparent;
+        border: 0;
 
         &:hover {
             background-color: var(--background-navbar-button-hover);
+            cursor: pointer;
         }
     }
 

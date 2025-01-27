@@ -1,0 +1,21 @@
+.container {
+    position: absolute;
+    top: 34px;
+    left: 10px;
+    display: flex;
+    flex-direction: column;
+    background-color: var(--background);
+    border: 1px solid var(--window-border);
+
+    .header {
+        height: 20px;
+        padding: 4px;
+        background-color: var(--background-navbar);
+        color: var(--text-white);
+    }
+
+    .body {
+        padding: 4px;
+        color: var(--text-white);
+    }
+}

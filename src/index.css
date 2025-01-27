@@ -18,6 +18,8 @@ body {
   --background-navbar: #373737;
   --background-navbar-button-hover: #4d4d4d;
 
+  --window-border: #414141;
+
   --text-white: #ffffff;
   --text-disabled: #a9a9a9;
 }
