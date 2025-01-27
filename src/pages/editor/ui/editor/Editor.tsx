@@ -1,5 +1,5 @@
-import { Canvas } from '../../../widgets/canvas/Canvas';
-import { Navbar } from '../../../widgets/navbar/Navbar';
+import { Canvas } from '../canvas/Canvas';
+import { Navbar } from '../navbar/Navbar';
 
 import styles from './Editor.module.scss';
 
