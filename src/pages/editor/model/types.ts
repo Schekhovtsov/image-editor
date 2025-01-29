@@ -1,1 +1,1 @@
-export type Window = 'create';
+export type Window = 'create' | 'tools';

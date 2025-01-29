@@ -1,17 +1,39 @@
 import { FC, useCallback, useEffect, useRef, useState } from 'react';
 import styles from './Window.module.scss';
 import { getInitialPosition } from './utils';
+import clsx from 'clsx';
+
+type WithoutButtonsProps = {
+    withoutButtons: true;
+    onSave?: never;
+    onClose?: never;
+};
+
+type WithButtonsProps = {
+    withoutButtons?: false;
+    onSave: () => void;
+    onClose: () => void;
+};
+
+type InCenterOfScreen = {
+    inCenterOfScreen?: true;
+    initialPosition?: never;
+};
+
+type InInitialPosition = {
+    inCenterOfScreen?: false;
+    initialPosition: { x: number; y: number };
+};
 
 type WindowProps = {
-    title: string;
+    title?: string;
     isOpen: boolean;
-    onClose: () => void;
     width?: number;
     height?: number;
     showCloseButton?: boolean;
-    onSave: () => void;
     children: JSX.Element;
-};
+} & (WithoutButtonsProps | WithButtonsProps) &
+    (InCenterOfScreen | InInitialPosition);
 
 export const Window: FC<WindowProps> = ({
     isOpen,
@@ -22,15 +44,22 @@ export const Window: FC<WindowProps> = ({
     showCloseButton = true,
     onSave,
     children,
+    withoutButtons = false,
+    inCenterOfScreen = true,
+    initialPosition = { x: 0, y: 0 },
 }) => {
     const [isDragging, setIsDragging] = useState(false);
 
     const [position, setPosition] = useState<{ x: number; y: number }>(
-        getInitialPosition({ width, height })
+        inCenterOfScreen
+            ? getInitialPosition({ width, height })
+            : initialPosition
     );
 
     const startPos = useRef<{ x: number; y: number }>(
-        getInitialPosition({ width, height })
+        inCenterOfScreen
+            ? getInitialPosition({ width, height })
+            : initialPosition
     );
     const popupRef = useRef<HTMLDivElement | null>(null);
 
@@ -84,20 +113,28 @@ export const Window: FC<WindowProps> = ({
             style={{
                 width,
                 height,
-
                 transform: `translate(${position.x}px, ${position.y}px)`,
             }}
             ref={popupRef}
         >
-            <div className={styles.header} onMouseDown={onMouseDown}>
+            <div
+                className={clsx(styles.header, {
+                    [styles.withoutButtonsHeader]: withoutButtons,
+                })}
+                onMouseDown={onMouseDown}
+            >
                 {title}
-                {showCloseButton && <button onClick={onClose}>X</button>}
+                {!withoutButtons && showCloseButton && (
+                    <button onClick={onClose}>X</button>
+                )}
             </div>
             <div className={styles.body}>{children}</div>
-            <div className={styles.footer}>
-                <button onClick={onClose}>Отмена</button>
-                <button onClick={onSave}>Принять</button>
-            </div>
+            {!withoutButtons && (
+                <div className={styles.footer}>
+                    <button onClick={onClose}>Отмена</button>
+                    <button onClick={onSave}>Принять</button>
+                </div>
+            )}
         </div>
     );
 };

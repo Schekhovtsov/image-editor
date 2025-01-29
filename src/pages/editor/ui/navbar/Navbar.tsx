@@ -1,10 +1,14 @@
-import { MouseEvent } from 'react';
+import { FC, MouseEvent, RefObject } from 'react';
 import { Menu, MenuButton, MenuItem, MenuItems } from '@headlessui/react';
 import styles from './Navbar.module.scss';
 import { useEditorStore } from '../../model/slice';
 import { Window } from '../../model/types';
 
-export const Navbar = () => {
+type NavbarProps = {
+    canvasRef: RefObject<HTMLCanvasElement>;
+};
+
+export const Navbar: FC<NavbarProps> = ({ canvasRef }) => {
     const canvasState = useEditorStore((state) => state.canvas);
     const toggleWindow = useEditorStore((state) => state.toggleWindow);
 
@@ -17,6 +21,22 @@ export const Navbar = () => {
 
     const onCloseHandler = () => {
         deleteCanvas();
+    };
+
+    const onSaveAsHandler = () => {
+        if (canvasRef.current) {
+            const downloadLink = document.createElement('a');
+            downloadLink.setAttribute('download', 'CanvasAsImage.png');
+
+            const dataURL = canvasRef.current.toDataURL('image/png');
+            const url = dataURL.replace(
+                /^data:image\/png/,
+                'data:application/octet-stream'
+            );
+
+            downloadLink.setAttribute('href', url);
+            downloadLink.click();
+        }
     };
 
     return (
@@ -35,8 +55,8 @@ export const Navbar = () => {
                     <MenuItem disabled>
                         <button>Сохранить</button>
                     </MenuItem>
-                    <MenuItem disabled>
-                        <button>Сохранить как</button>
+                    <MenuItem disabled={!canvasState}>
+                        <button onClick={onSaveAsHandler}>Сохранить как</button>
                     </MenuItem>
                     <MenuItem disabled={!canvasState}>
                         <button onClick={onCloseHandler}>

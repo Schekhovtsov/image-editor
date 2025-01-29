@@ -22,6 +22,7 @@ export const CreateWindow = () => {
     const onCreateCanvasHandler = () => {
         createCanvas(canvasSize);
         toggleWindow('create');
+        toggleWindow('tools');
     };
 
     return (
