@@ -23,7 +23,6 @@
         background-color: var(--background-navbar);
         color: var(--text-white);
         cursor: pointer;
-        user-select: none;
 
         button {
             @include button;

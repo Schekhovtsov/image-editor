@@ -5,11 +5,18 @@ import { useEditorStore } from '../../model/slice';
 import { Window } from '../../model/types';
 
 export const Navbar = () => {
+    const canvasState = useEditorStore((state) => state.canvas);
     const toggleWindow = useEditorStore((state) => state.toggleWindow);
+
+    const deleteCanvas = useEditorStore((state) => state.deleteCanvas);
 
     const toggleWindowHandler = (event: MouseEvent<HTMLButtonElement>) => {
         const window = event.currentTarget.name as Window;
         toggleWindow(window);
+    };
+
+    const onCloseHandler = () => {
+        deleteCanvas();
     };
 
     return (
@@ -30,6 +37,11 @@ export const Navbar = () => {
                     </MenuItem>
                     <MenuItem disabled>
                         <button>Сохранить как</button>
+                    </MenuItem>
+                    <MenuItem disabled={!canvasState}>
+                        <button onClick={onCloseHandler}>
+                            Закрыть изображение
+                        </button>
                     </MenuItem>
                 </MenuItems>
             </Menu>
