@@ -4,7 +4,8 @@ body {
     
     * {
       font-size: 14px;
-      font-family:'Segoe UI', Tahoma, Geneva, Verdana, sans-serif
+      font-family:'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+      user-select: none;
     }
 }
 

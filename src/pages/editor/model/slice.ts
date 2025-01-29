@@ -12,9 +12,10 @@ type State = {
 type Actions = {
     toggleWindow: (window: Window) => void;
     setCanvas: ({ width, height }: { width: number; height: number }) => void;
+    deleteCanvas: () => void;
 };
 
-export const useEditorStore = create<State & Actions>((set, get) => ({
+export const useEditorStore = create<State & Actions>((set) => ({
     windows: {
         create: false,
     },
@@ -25,4 +26,5 @@ export const useEditorStore = create<State & Actions>((set, get) => ({
         })),
     setCanvas: ({ width, height }: { width: number; height: number }) =>
         set({ canvas: { width, height } }),
+    deleteCanvas: () => set({ canvas: null }),
 }));

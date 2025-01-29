@@ -1,8 +1,12 @@
-import { Editor } from '../pages/editor';
-import './App.css';
+import { Editor } from '../pages/editor/index.tsx';
+import styles from './App.module.scss';
 
 function App() {
-    return <Editor />;
+    return (
+        <div className={styles.container}>
+            <Editor />
+        </div>
+    );
 }
 
 export default App;

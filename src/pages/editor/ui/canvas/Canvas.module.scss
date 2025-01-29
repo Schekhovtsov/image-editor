@@ -3,5 +3,11 @@
     height: calc(100vh - 24px);
     background-color: var(--background);
     display: flex;
+    align-items: center;
+    justify-content: center;
     flex-grow: 1;
+}
+
+.canvas {
+    
 }
