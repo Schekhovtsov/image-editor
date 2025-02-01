@@ -22,6 +22,12 @@ body {
   --window-border: #414141;
 
   --text-white: #ffffff;
+  --text-gray: #acacac;
   --text-disabled: #a9a9a9;
+
+  --tool-icon-color: #ffffff;
+
+  --navbar-height: 30px;
+  --footer-height: 24px;
 }
 

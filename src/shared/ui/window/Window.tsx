@@ -50,17 +50,15 @@ export const Window: FC<WindowProps> = ({
 }) => {
     const [isDragging, setIsDragging] = useState(false);
 
+    const _position = inCenterOfScreen
+        ? getInitialPosition({ width, height })
+        : initialPosition;
+
     const [position, setPosition] = useState<{ x: number; y: number }>(
-        inCenterOfScreen
-            ? getInitialPosition({ width, height })
-            : initialPosition
+        _position
     );
 
-    const startPos = useRef<{ x: number; y: number }>(
-        inCenterOfScreen
-            ? getInitialPosition({ width, height })
-            : initialPosition
-    );
+    const startPos = useRef<{ x: number; y: number }>(_position);
     const popupRef = useRef<HTMLDivElement | null>(null);
 
     const onMouseMove = useCallback(
@@ -99,9 +97,9 @@ export const Window: FC<WindowProps> = ({
 
     useEffect(() => {
         if (!isOpen) {
-            setPosition(getInitialPosition({ width, height }));
+            setPosition(_position);
         }
-    }, [isOpen, width, height]);
+    }, [isOpen, _position]);
 
     if (!isOpen) {
         return null;
