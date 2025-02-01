@@ -1,5 +1,5 @@
 import { create } from 'zustand';
-import { Window } from './types';
+import { Tool, Window } from './types';
 
 type State = {
     windows: Record<Window, boolean>;
@@ -7,14 +7,14 @@ type State = {
         width: number;
         height: number;
     } | null;
-    activeTool: 'move' | null,
+    activeTool: Tool | null;
 };
 
 type Actions = {
     toggleWindow: (window: Window) => void;
     setCanvas: ({ width, height }: { width: number; height: number }) => void;
     deleteCanvas: () => void;
-    setActiveTool: (tool: 'move' | null) => void
+    setActiveTool: (tool: Tool | null) => void;
 };
 
 export const useEditorStore = create<State & Actions>((set) => ({
@@ -31,5 +31,5 @@ export const useEditorStore = create<State & Actions>((set) => ({
     setCanvas: ({ width, height }: { width: number; height: number }) =>
         set({ canvas: { width, height } }),
     deleteCanvas: () => set({ canvas: null }),
-    setActiveTool: (tool: 'move' | null) => set({ activeTool: tool }),
+    setActiveTool: (tool: Tool | null) => set({ activeTool: tool }),
 }));

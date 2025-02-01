@@ -1,0 +1,14 @@
+.container {
+    display: flex;
+    align-items: center;
+    gap: 50px;
+    padding: 10px;
+    box-sizing: border-box;
+    height: var(--footer-height);
+    background-color: var(--background-navbar);
+    color: var(--text-gray);
+
+    span {
+        font-size: 12px !important;
+    }
+}

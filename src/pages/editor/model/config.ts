@@ -1,0 +1,1 @@
+export const TOOL_ICON_COLOR = 'white';

@@ -3,3 +3,16 @@
     flex-direction: column;
     gap: 5px;
 }
+
+.toolButton {
+    background-color: transparent;
+    border: 0;
+    margin: 0;
+    padding: 0;
+    cursor: pointer;
+
+    &:disabled {
+        opacity: 0.5;
+        cursor: auto;
+    }
+}
