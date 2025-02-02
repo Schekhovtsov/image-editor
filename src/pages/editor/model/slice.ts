@@ -9,6 +9,7 @@ type State = {
     } | null;
     activeTool: Tool | null;
     layers: Layers[];
+    activeLayer: number | null;
 };
 
 type Actions = {
@@ -23,6 +24,8 @@ type Actions = {
         width: number;
         height: number;
     }) => void;
+    setActiveLayer: (id: number | null) => void;
+    changeLayerVisibility: (id: number | null) => void;
 };
 
 export const useEditorStore = create<State & Actions>((set) => ({
@@ -34,6 +37,7 @@ export const useEditorStore = create<State & Actions>((set) => ({
     canvas: null,
     activeTool: null,
     layers: [],
+    activeLayer: null,
     toggleWindow: (window: Window) =>
         set((state) => ({
             windows: { ...state.windows, [window]: !state.windows[window] },
@@ -54,8 +58,24 @@ export const useEditorStore = create<State & Actions>((set) => ({
                     layers: true,
                 },
                 layers: [
-                    { id: 1, name: 'Layer 1', visible: true, effects: { opacity: 1 } }
-                ]
+                    {
+                        id: 1,
+                        name: 'Слой 1',
+                        visible: true,
+                        effects: { opacity: 1 },
+                    },
+                ],
+                activeLayer: 1,
             };
         }),
+    setActiveLayer: (activeLayer: number | null) => set({ activeLayer }),
+    changeLayerVisibility: (layerId: number | null) => set((state) => {
+        const layers = state.layers.map((layer) => {
+            if (layer.id === layerId) {
+                return { ...layer, visible: !layer.visible };
+            }
+            return layer;
+        });
+        return { ...state, layers };
+    })
 }));

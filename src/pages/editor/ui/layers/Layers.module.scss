@@ -3,3 +3,30 @@
     flex-direction: column;
     gap: 5px;
 }
+
+.item {
+    display: flex;
+    align-items: center;
+    height: 50px;
+    padding: 10px;
+    gap: 10px;
+}
+
+.active {
+    background-color: var(--background-layer-active);
+}
+
+.eyeIconButton {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border: 1px solid var(--layers-visible-icon-border);
+    color: var(--icon);
+    width: 25px;
+    height: 25px;
+    padding: 0;
+}
+
+.hidden {
+    opacity: 0.5;
+}
