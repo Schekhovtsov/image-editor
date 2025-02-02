@@ -30,6 +30,7 @@ export const Tools = () => {
             height={80}
             inCenterOfScreen={false}
             initialPosition={{ x: 10, y: 150 }}
+            showDragPoint
         >
             <div className={styles.container}>
                 <button

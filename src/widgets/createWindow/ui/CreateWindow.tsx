@@ -6,8 +6,8 @@ import styles from './CreateWindow.module.scss';
 
 export const CreateWindow = () => {
     const toggleWindow = useEditorStore((state) => state.toggleWindow);
-    const createCanvas = useEditorStore((state) => state.setCanvas);
-    
+    const createNewImage = useEditorStore((state) => state.createNewImage);
+
     const windows = useEditorStore((state) => state.windows);
 
     const [canvasSize, setCanvasSize] = useState({ height: 500, width: 500 });
@@ -20,9 +20,7 @@ export const CreateWindow = () => {
     };
 
     const onCreateCanvasHandler = () => {
-        createCanvas(canvasSize);
-        toggleWindow('create');
-        toggleWindow('tools');
+        createNewImage(canvasSize);
     };
 
     return (
