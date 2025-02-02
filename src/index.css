@@ -27,6 +27,8 @@ body {
 
   --tool-icon-color: #ffffff;
 
+  --drag-point: #d7d7d7;
+
   --navbar-height: 30px;
   --footer-height: 24px;
 }

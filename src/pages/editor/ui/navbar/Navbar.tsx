@@ -18,7 +18,7 @@ type NavbarProps = {
 export const Navbar: FC<NavbarProps> = ({ canvasRef }) => {
     const canvasState = useEditorStore((state) => state.canvas);
     const toggleWindow = useEditorStore((state) => state.toggleWindow);
-    const { tools } = useEditorStore((state) => state.windows);
+    const { tools, layers } = useEditorStore((state) => state.windows);
 
     const deleteCanvas = useEditorStore((state) => state.deleteCanvas);
 
@@ -94,6 +94,15 @@ export const Navbar: FC<NavbarProps> = ({ canvasRef }) => {
                         >
                             Панель инструментов
                             {tools && <CheckIcon width={16} height={16} />}
+                        </button>
+                    </MenuItem>
+                    <MenuItem>
+                        <button
+                            name="layers"
+                            onClick={toggleWindowHandler(true)}
+                        >
+                            Слои
+                            {layers && <CheckIcon width={16} height={16} />}
                         </button>
                     </MenuItem>
                 </MenuItems>

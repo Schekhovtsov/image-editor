@@ -1,7 +1,6 @@
 import { FC, useCallback, useEffect, useRef, useState } from 'react';
 import styles from './Window.module.scss';
 import { getInitialPosition } from './utils';
-import clsx from 'clsx';
 
 type WithoutButtonsProps = {
     withoutButtons: true;
@@ -31,6 +30,7 @@ type WindowProps = {
     width?: number;
     height?: number;
     showCloseButton?: boolean;
+    showDragPoint?: boolean;
     children: JSX.Element;
 } & (WithoutButtonsProps | WithButtonsProps) &
     (InCenterOfScreen | InInitialPosition);
@@ -47,6 +47,7 @@ export const Window: FC<WindowProps> = ({
     withoutButtons = false,
     inCenterOfScreen = true,
     initialPosition = { x: 0, y: 0 },
+    showDragPoint = false,
 }) => {
     const [isDragging, setIsDragging] = useState(false);
 
@@ -115,12 +116,8 @@ export const Window: FC<WindowProps> = ({
             }}
             ref={popupRef}
         >
-            <div
-                className={clsx(styles.header, {
-                    [styles.withoutButtonsHeader]: withoutButtons,
-                })}
-                onMouseDown={onMouseDown}
-            >
+            <div className={styles.header} onMouseDown={onMouseDown}>
+                {showDragPoint && <div className={styles.dragPoint} />}
                 {title}
                 {!withoutButtons && showCloseButton && (
                     <button onClick={onClose}>X</button>
