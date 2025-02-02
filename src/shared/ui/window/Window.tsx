@@ -1,6 +1,7 @@
 import { FC, useCallback, useEffect, useRef, useState } from 'react';
 import styles from './Window.module.scss';
 import { getInitialPosition } from './utils';
+import clsx from 'clsx';
 
 type WithoutButtonsProps = {
     withoutButtons: true;
@@ -32,6 +33,7 @@ type WindowProps = {
     showCloseButton?: boolean;
     showDragPoint?: boolean;
     children: JSX.Element;
+    bodyClassName?: string;
 } & (WithoutButtonsProps | WithButtonsProps) &
     (InCenterOfScreen | InInitialPosition);
 
@@ -48,6 +50,7 @@ export const Window: FC<WindowProps> = ({
     inCenterOfScreen = true,
     initialPosition = { x: 0, y: 0 },
     showDragPoint = false,
+    bodyClassName,
 }) => {
     const [isDragging, setIsDragging] = useState(false);
 
@@ -123,7 +126,7 @@ export const Window: FC<WindowProps> = ({
                     <button onClick={onClose}>X</button>
                 )}
             </div>
-            <div className={styles.body}>{children}</div>
+            <div className={clsx(styles.body, bodyClassName)}>{children}</div>
             {!withoutButtons && (
                 <div className={styles.footer}>
                     <button onClick={onClose}>Отмена</button>

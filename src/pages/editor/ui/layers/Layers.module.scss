@@ -1,15 +1,28 @@
+.windowContainer {
+    padding: 0 !important;
+    overflow: auto;
+}
+
 .container {
     display: flex;
     flex-direction: column;
     gap: 5px;
+    padding: 10px;
 }
 
 .item {
     display: flex;
     align-items: center;
+    justify-content: space-between;
     height: 50px;
     padding: 10px;
     gap: 10px;
+
+    & > div {
+        display: flex;
+        align-items: center;
+        gap: 10px;
+    }
 }
 
 .active {
@@ -29,4 +42,26 @@
 
 .hidden {
     opacity: 0.5;
+}
+
+.footer {
+    position: absolute;
+    bottom: 0;
+    width: 100%;
+    display: flex;
+    align-items: center;
+    height: 30px;
+    background: var(--background-navbar);
+}
+
+.icon {
+    color: var(--icon);
+    width: 18px;
+    height: 18px;
+}
+
+.crossIcon {
+    color: var(--icon);
+    width: 10px;
+    height: 10px;
 }

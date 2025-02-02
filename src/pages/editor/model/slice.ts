@@ -26,6 +26,8 @@ type Actions = {
     }) => void;
     setActiveLayer: (id: number | null) => void;
     changeLayerVisibility: (id: number | null) => void;
+    addLayer: () => void;
+    deleteLayer: (id: number) => void;
 };
 
 export const useEditorStore = create<State & Actions>((set) => ({
@@ -69,13 +71,33 @@ export const useEditorStore = create<State & Actions>((set) => ({
             };
         }),
     setActiveLayer: (activeLayer: number | null) => set({ activeLayer }),
-    changeLayerVisibility: (layerId: number | null) => set((state) => {
-        const layers = state.layers.map((layer) => {
-            if (layer.id === layerId) {
-                return { ...layer, visible: !layer.visible };
-            }
-            return layer;
-        });
-        return { ...state, layers };
-    })
+    changeLayerVisibility: (layerId: number | null) =>
+        set((state) => {
+            const layers = state.layers.map((layer) => {
+                if (layer.id === layerId) {
+                    return { ...layer, visible: !layer.visible };
+                }
+                return layer;
+            });
+            return { ...state, layers };
+        }),
+    addLayer: () =>
+        set((state) => ({
+            ...state,
+            layers: [
+                {
+                    id: state.layers.length + 1,
+                    name: `Слой ${state.layers.length + 1}`,
+                    visible: true,
+                    effects: { opacity: 1 },
+                },
+                ...state.layers,
+            ],
+            activeLayer: state.layers.length + 1,
+        })),
+    deleteLayer: (layerId: number) =>
+        set((state) => ({
+            ...state,
+            layers: state.layers.filter((layer) => layer.id !== layerId),
+        })),
 }));

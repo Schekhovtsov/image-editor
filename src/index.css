@@ -16,6 +16,9 @@ body {
         cursor: pointer;
         color: var(--text-white)
     }
+
+    scrollbar-color: rgb(80, 80, 80) transparent;
+    scrollbar-width: thin;
 }
 
 #root {
@@ -44,5 +47,5 @@ body {
     --navbar-height: 30px;
     --footer-height: 24px;
 
-    --icon: #a0a0a0;
+    --icon: #959595;
 }
