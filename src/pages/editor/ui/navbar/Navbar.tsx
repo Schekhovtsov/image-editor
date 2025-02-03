@@ -7,7 +7,7 @@ import {
     MenuSeparator,
 } from '@headlessui/react';
 import styles from './Navbar.module.scss';
-import { useEditorStore } from '../../model/slice';
+import { useEditorStore } from '../../model/editorStore';
 import { Window } from '../../model/types';
 import CheckIcon from '../../../../shared/assets/icons/check.svg?react';
 

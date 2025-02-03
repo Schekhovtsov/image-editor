@@ -1,5 +1,5 @@
 import { Window } from '../../../../shared/ui/window/Window';
-import { useEditorStore } from '../../model/slice';
+import { useEditorStore } from '../../model/editorStore';
 import MoveIcon from '../../../../shared/assets/icons/move.svg?react';
 import CursorIcon from '../../../../shared/assets/icons/cursor.svg?react';
 

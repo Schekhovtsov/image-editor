@@ -1,4 +1,4 @@
-import { useEditorStore } from '../../model/slice';
+import { useEditorStore } from '../../model/editorStore';
 import styles from './Footer.module.scss';
 
 export const Footer = () => {

@@ -1,7 +1,8 @@
 import { FC, RefObject, useEffect, useState, MouseEvent } from 'react';
-import { useEditorStore } from '../../model/slice';
+import { useLayersStore } from '../../model/layersStore';
 import styles from './Canvas.module.scss';
 import { getCursor } from './utils';
+import { useEditorStore } from '../../model/editorStore';
 
 type CanvasProps = {
     canvasRef: RefObject<HTMLCanvasElement>;
@@ -10,6 +11,12 @@ type CanvasProps = {
 export const Canvas: FC<CanvasProps> = ({ canvasRef }) => {
     const canvasState = useEditorStore((state) => state.canvas);
     const activeTool = useEditorStore((state) => state.activeTool);
+
+    const layers = useLayersStore((state) => state.layers);
+    // const activeLayerId = useLayersStore((state) => state.activeLayer);
+    // const activeLayer = useLayersStore((state) =>
+    //     state.layers.find((layer) => layer.id === state.activeLayer)
+    // );
 
     const [offset, setOffset] = useState({ x: 0, y: 0 });
     const [isDragging, setIsDragging] = useState(false);
@@ -63,7 +70,7 @@ export const Canvas: FC<CanvasProps> = ({ canvasRef }) => {
         };
 
         drawImage();
-    }, [canvasRef, canvasState, offset]);
+    }, [canvasRef, canvasState, offset, layers]);
 
     return (
         <div
@@ -76,17 +83,19 @@ export const Canvas: FC<CanvasProps> = ({ canvasRef }) => {
                 cursor: getCursor({ activeTool, isDragging }),
             }}
         >
-            {canvasState && (
-                <canvas
-                    width={canvasState.width}
-                    height={canvasState.height}
-                    ref={canvasRef}
-                    className={styles.canvas}
-                    style={{
-                        transform: `translate(${offset.x}px, ${offset.y}px)`,
-                    }}
-                ></canvas>
-            )}
+            {canvasState &&
+                layers.map((layer) => (
+                    <canvas
+                        key={layer.id}
+                        width={canvasState.width}
+                        height={canvasState.height}
+                        ref={canvasRef}
+                        className={styles.canvas}
+                        style={{
+                            transform: `translate(${offset.x}px, ${offset.y}px)`,
+                        }}
+                    ></canvas>
+                ))}
         </div>
     );
 };
