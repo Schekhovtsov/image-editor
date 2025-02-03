@@ -1,25 +1,26 @@
 import { type MouseEvent } from 'react';
 import clsx from 'clsx';
 import { Window } from '../../../../shared/ui/window/Window';
-import { useEditorStore } from '../../model/slice';
+import { useLayersStore } from '../../model/layersStore';
 import { LAYERS_HEIGHT, LAYERS_WIDTH, RIGHT_OFFSET } from './config';
 import EyeIcon from '../../../../shared/assets/icons/eye.svg?react';
 import PlusIcon from '../../../../shared/assets/icons/plus.svg?react';
 import CrossIcon from '../../../../shared/assets/icons/cross.svg?react';
 
 import styles from './Layers.module.scss';
+import { useEditorStore } from '../../model/editorStore';
 
 export const Layers = () => {
     const windows = useEditorStore((state) => state.windows);
-    const layers = useEditorStore((state) => state.layers);
-    const activeLayer = useEditorStore((state) => state.activeLayer);
+    const layers = useLayersStore((state) => state.layers);
+    const activeLayer = useLayersStore((state) => state.activeLayer);
 
-    const changeActiveLayer = useEditorStore((state) => state.setActiveLayer);
-    const changeLayerVisibility = useEditorStore(
+    const changeActiveLayer = useLayersStore((state) => state.setActiveLayer);
+    const changeLayerVisibility = useLayersStore(
         (state) => state.changeLayerVisibility
     );
-    const addLayer = useEditorStore((state) => state.addLayer);
-    const deleteLayer = useEditorStore((state) => state.deleteLayer);
+    const addLayer = useLayersStore((state) => state.addLayer);
+    const deleteLayer = useLayersStore((state) => state.deleteLayer);
 
     const x =
         document.documentElement.clientWidth - LAYERS_WIDTH - RIGHT_OFFSET;

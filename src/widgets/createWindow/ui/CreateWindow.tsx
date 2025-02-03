@@ -1,5 +1,5 @@
 import { useState } from 'react';
-import { useEditorStore } from '../../../pages/editor/model/slice';
+import { useEditorStore } from '../../../pages/editor/model/editorStore';
 import { Window } from '../../../shared/ui/window/Window';
 
 import styles from './CreateWindow.module.scss';

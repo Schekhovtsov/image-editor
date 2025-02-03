@@ -6,7 +6,7 @@ export type Effect = {
     opacity: number;
 };
 
-export type Layers = {
+export type Layer = {
     id: number;
     name: string;
     visible: boolean;
