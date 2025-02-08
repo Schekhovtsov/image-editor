@@ -1,7 +1,8 @@
-import { FC, useCallback, useEffect, useRef, useState } from 'react';
-import styles from './Window.module.scss';
-import { getInitialPosition } from './utils';
 import clsx from 'clsx';
+import { FC, useCallback, useEffect, useRef, useState } from 'react';
+
+import { getInitialPosition } from './utils';
+import styles from './Window.module.scss';
 
 type WithoutButtonsProps = {
     withoutButtons: true;
@@ -100,10 +101,10 @@ export const Window: FC<WindowProps> = ({
     }, [onMouseMove]);
 
     useEffect(() => {
-        if (!isOpen) {
+        return () => {
             setPosition(_position);
-        }
-    }, [isOpen, _position]);
+        };
+    }, []);
 
     if (!isOpen) {
         return null;

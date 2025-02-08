@@ -1,4 +1,6 @@
 import { create } from 'zustand';
+
+import { getRandomColor, INITIAL_LAYER } from './config';
 import { Layer } from './types';
 
 type State = {
@@ -30,12 +32,13 @@ export const useLayersStore = create<State & Actions>((set) => ({
     addLayer: () =>
         set((state) => ({
             ...state,
-            layers: [
+            layers: state.layers.length === 0 ? [INITIAL_LAYER] : [
                 {
                     id: state.layers.length + 1,
                     name: `Слой ${state.layers.length + 1}`,
                     visible: true,
                     effects: { opacity: 1 },
+                    fill: getRandomColor(),
                 },
                 ...state.layers,
             ],

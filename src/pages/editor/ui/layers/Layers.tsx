@@ -1,14 +1,14 @@
-import { type MouseEvent } from 'react';
 import clsx from 'clsx';
-import { Window } from '../../../../shared/ui/window/Window';
-import { useLayersStore } from '../../model/layersStore';
-import { LAYERS_HEIGHT, LAYERS_WIDTH, RIGHT_OFFSET } from './config';
+import { type MouseEvent } from 'react';
+
+import CrossIcon from '../../../../shared/assets/icons/cross.svg?react';
 import EyeIcon from '../../../../shared/assets/icons/eye.svg?react';
 import PlusIcon from '../../../../shared/assets/icons/plus.svg?react';
-import CrossIcon from '../../../../shared/assets/icons/cross.svg?react';
-
-import styles from './Layers.module.scss';
+import { Window } from '../../../../shared/ui/window/Window';
 import { useEditorStore } from '../../model/editorStore';
+import { useLayersStore } from '../../model/layersStore';
+import { LAYERS_HEIGHT, LAYERS_WIDTH, RIGHT_OFFSET } from './config';
+import styles from './Layers.module.scss';
 
 export const Layers = () => {
     const windows = useEditorStore((state) => state.windows);
