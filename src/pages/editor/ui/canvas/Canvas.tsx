@@ -63,7 +63,6 @@ export const Canvas: FC<CanvasProps> = ({ canvasRef }) => {
                 layers.forEach((layer) => {
                     if (layer.visible) {
                         context.globalAlpha = layer.effects.opacity;
-                        console.log(layer.fill);
                         // Применяем эффекты (например, сепия)
                         //   const processedImageData = applySepia(layer.imageData);
 

@@ -7,6 +7,9 @@ body {
         font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
         user-select: none;
         box-sizing: border-box;
+
+        scrollbar-color: rgb(80, 80, 80) transparent;
+        scrollbar-width: thin;
     }
 
     button {
@@ -14,11 +17,8 @@ body {
         background: none;
         padding: 0 6px;
         cursor: pointer;
-        color: var(--text-white)
+        color: var(--text-white);
     }
-
-    scrollbar-color: rgb(80, 80, 80) transparent;
-    scrollbar-width: thin;
 }
 
 #root {

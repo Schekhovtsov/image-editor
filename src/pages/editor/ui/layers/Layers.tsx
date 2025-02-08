@@ -58,7 +58,7 @@ export const Layers = () => {
         >
             <>
                 <div className={styles.container}>
-                    {layers.map(({ id, name, visible }) => (
+                    {layers.toReversed().map(({ id, name, visible }) => (
                         <button
                             key={id}
                             className={clsx(

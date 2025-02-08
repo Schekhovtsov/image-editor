@@ -32,16 +32,19 @@ export const useLayersStore = create<State & Actions>((set) => ({
     addLayer: () =>
         set((state) => ({
             ...state,
-            layers: state.layers.length === 0 ? [INITIAL_LAYER] : [
-                {
-                    id: state.layers.length + 1,
-                    name: `Слой ${state.layers.length + 1}`,
-                    visible: true,
-                    effects: { opacity: 1 },
-                    fill: getRandomColor(),
-                },
-                ...state.layers,
-            ],
+            layers:
+                state.layers.length === 0
+                    ? [INITIAL_LAYER]
+                    : [
+                          ...state.layers,
+                          {
+                              id: state.layers.length + 1,
+                              name: `Слой ${state.layers.length + 1}`,
+                              visible: true,
+                              effects: { opacity: 1 },
+                              fill: getRandomColor(),
+                          },
+                      ],
             activeLayer: state.layers.length + 1,
         })),
     deleteLayer: (layerId: number) =>
