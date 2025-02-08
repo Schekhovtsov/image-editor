@@ -83,7 +83,12 @@ export const Navbar: FC<NavbarProps> = ({ canvasRef }) => {
             </Menu>
             <MenuSeparator />
             <Menu>
-                <MenuButton className={styles.topButton}>Окна</MenuButton>
+                <MenuButton
+                    className={styles.topButton}
+                    disabled={!canvasState}
+                >
+                    Окна
+                </MenuButton>
                 <MenuItems
                     anchor="bottom start"
                     className={styles.dropdownItems}
@@ -92,6 +97,7 @@ export const Navbar: FC<NavbarProps> = ({ canvasRef }) => {
                         <button
                             name="tools"
                             onClick={toggleWindowHandler(true)}
+                            disabled={!canvasState}
                         >
                             Панель инструментов
                             {tools && <CheckIcon width={16} height={16} />}
@@ -101,6 +107,7 @@ export const Navbar: FC<NavbarProps> = ({ canvasRef }) => {
                         <button
                             name="layers"
                             onClick={toggleWindowHandler(true)}
+                            disabled={!canvasState}
                         >
                             Слои
                             {layers && <CheckIcon width={16} height={16} />}

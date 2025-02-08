@@ -1,6 +1,6 @@
 export type Window = 'create' | 'tools' | 'layers';
 
-export type Tool = 'move';
+export type Tool = 'move' | 'fill';
 
 export type Effect = {
     opacity: number;

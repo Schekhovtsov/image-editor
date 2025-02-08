@@ -24,6 +24,15 @@
             border-radius: 5px;
         }
     }
+
+    button:disabled {
+        color: var(--text-disabled);
+
+        &:hover {
+            background: none;
+            cursor: default;
+        }
+    }
 }
 
 .dropdownItems {
