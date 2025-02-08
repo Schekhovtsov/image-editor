@@ -1,4 +1,3 @@
-import { FC, MouseEvent, RefObject } from 'react';
 import {
     Menu,
     MenuButton,
@@ -6,10 +5,12 @@ import {
     MenuItems,
     MenuSeparator,
 } from '@headlessui/react';
-import styles from './Navbar.module.scss';
+import { FC, MouseEvent, RefObject } from 'react';
+
+import CheckIcon from '../../../../shared/assets/icons/check.svg?react';
 import { useEditorStore } from '../../model/editorStore';
 import { Window } from '../../model/types';
-import CheckIcon from '../../../../shared/assets/icons/check.svg?react';
+import styles from './Navbar.module.scss';
 
 type NavbarProps = {
     canvasRef: RefObject<HTMLCanvasElement>;

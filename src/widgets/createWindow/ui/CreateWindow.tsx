@@ -1,7 +1,8 @@
 import { useState } from 'react';
-import { useEditorStore } from '../../../pages/editor/model/editorStore';
-import { Window } from '../../../shared/ui/window/Window';
 
+import { useEditorStore } from '../../../pages/editor/model/editorStore';
+import { useLayersStore } from '../../../pages/editor/model/layersStore';
+import { Window } from '../../../shared/ui/window/Window';
 import styles from './CreateWindow.module.scss';
 
 export const CreateWindow = () => {
@@ -9,6 +10,7 @@ export const CreateWindow = () => {
     const createNewImage = useEditorStore((state) => state.createNewImage);
 
     const windows = useEditorStore((state) => state.windows);
+    const addLayer = useLayersStore((state) => state.addLayer);
 
     const [canvasSize, setCanvasSize] = useState({ height: 500, width: 500 });
 
@@ -21,6 +23,7 @@ export const CreateWindow = () => {
 
     const onCreateCanvasHandler = () => {
         createNewImage(canvasSize);
+        addLayer();
     };
 
     return (

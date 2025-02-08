@@ -1,4 +1,5 @@
 import { create } from 'zustand';
+
 import { Tool, Window } from './types';
 
 type State = {
@@ -50,15 +51,6 @@ export const useEditorStore = create<State & Actions>((set) => ({
                     tools: true,
                     layers: true,
                 },
-                layers: [
-                    {
-                        id: 1,
-                        name: 'Слой 1',
-                        visible: true,
-                        effects: { opacity: 1 },
-                    },
-                ],
-                activeLayer: 1,
             };
         }),
 }));

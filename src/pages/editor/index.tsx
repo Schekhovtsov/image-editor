@@ -1,10 +1,11 @@
-import { Canvas } from './ui/canvas';
-import { Navbar } from './ui/navbar';
-import { CreateWindow } from '../../widgets/createWindow';
 import { useRef } from 'react';
-import { Tools } from './ui/tools/Tools';
+
+import { CreateWindow } from '../../widgets/createWindow';
+import { Canvas } from './ui/canvas';
 import { Footer } from './ui/footer/Footer';
 import { Layers } from './ui/layers/Layers';
+import { Navbar } from './ui/navbar';
+import { Tools } from './ui/tools/Tools';
 
 export const Editor = () => {
     const canvasRef = useRef<HTMLCanvasElement>(null);

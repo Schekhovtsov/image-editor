@@ -1,8 +1,9 @@
-import { FC, RefObject, useEffect, useState, MouseEvent } from 'react';
+import { FC, MouseEvent,RefObject, useEffect, useState } from 'react';
+
+import { useEditorStore } from '../../model/editorStore';
 import { useLayersStore } from '../../model/layersStore';
 import styles from './Canvas.module.scss';
 import { getCursor } from './utils';
-import { useEditorStore } from '../../model/editorStore';
 
 type CanvasProps = {
     canvasRef: RefObject<HTMLCanvasElement>;
@@ -57,15 +58,26 @@ export const Canvas: FC<CanvasProps> = ({ canvasRef }) => {
         const drawImage = () => {
             const canvas = canvasRef.current;
             const context = canvas?.getContext('2d');
-
+          
             if (context) {
-                context.fillStyle = '#ffffff';
-                context.fillRect(
-                    offset.x,
-                    offset.y,
-                    context.canvas.width,
-                    context.canvas.height
-                );
+                layers.forEach((layer) => {
+                    if (layer.visible) {
+                        context.globalAlpha = layer.effects.opacity;
+                        console.log(layer.fill);
+                        // Применяем эффекты (например, сепия)
+                        //   const processedImageData = applySepia(layer.imageData);
+
+                        context.fillStyle = layer.fill;
+                        context.fillRect(
+                            offset.x,
+                            offset.y,
+                            context.canvas.width,
+                            context.canvas.height
+                        );
+
+                        context.globalAlpha = 1.0;
+                    }
+                });
             }
         };
 
@@ -83,19 +95,17 @@ export const Canvas: FC<CanvasProps> = ({ canvasRef }) => {
                 cursor: getCursor({ activeTool, isDragging }),
             }}
         >
-            {canvasState &&
-                layers.map((layer) => (
-                    <canvas
-                        key={layer.id}
-                        width={canvasState.width}
-                        height={canvasState.height}
-                        ref={canvasRef}
-                        className={styles.canvas}
-                        style={{
-                            transform: `translate(${offset.x}px, ${offset.y}px)`,
-                        }}
-                    ></canvas>
-                ))}
+            {canvasState && (
+                <canvas
+                    width={canvasState.width}
+                    height={canvasState.height}
+                    ref={canvasRef}
+                    //   className={styles.canvas}
+                    style={{
+                        transform: `translate(${offset.x}px, ${offset.y}px)`,
+                    }}
+                ></canvas>
+            )}
         </div>
     );
 };
