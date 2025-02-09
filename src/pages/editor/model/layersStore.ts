@@ -1,7 +1,8 @@
 import { create } from 'zustand';
 
-import { getRandomColor, INITIAL_LAYER } from './config';
+import { INITIAL_LAYER } from './config';
 import { Layer } from './types';
+import { getRandomColor } from './utils';
 
 type State = {
     layers: Layer[];
