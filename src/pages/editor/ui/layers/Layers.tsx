@@ -59,7 +59,8 @@ export const Layers = () => {
             <>
                 <div className={styles.container}>
                     {layers.toReversed().map(({ id, name, visible }) => (
-                        <button
+                        <div
+                            role="button"
                             key={id}
                             className={clsx(
                                 styles.item,
@@ -88,7 +89,7 @@ export const Layers = () => {
                             >
                                 <CrossIcon className={styles.crossIcon} />
                             </button>
-                        </button>
+                        </div>
                     ))}
                 </div>
                 <div className={styles.footer}>

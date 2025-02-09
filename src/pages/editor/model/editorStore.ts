@@ -1,6 +1,8 @@
 import { create } from 'zustand';
+import { devtools } from 'zustand/middleware';
 
-import { Tool, Window } from './types';
+import { DEFAULT_SELECTION } from './config';
+import { Selection, Tool, Window } from './types';
 
 type State = {
     windows: Record<Window, boolean>;
@@ -9,6 +11,7 @@ type State = {
         height: number;
     } | null;
     activeTool: Tool | null;
+    selection: Selection;
 };
 
 type Actions = {
@@ -23,9 +26,11 @@ type Actions = {
         height: number;
     }) => void;
     setActiveTool: (tool: Tool | null) => void;
+    setSelection: (selection: Partial<Selection>) => void;
+    clearSelection: () => void;
 };
 
-export const useEditorStore = create<State & Actions>((set) => ({
+export const useEditorStore = create<State & Actions>()((set) => ({
     windows: {
         create: false,
         tools: false,
@@ -53,4 +58,8 @@ export const useEditorStore = create<State & Actions>((set) => ({
                 },
             };
         }),
+    selection: DEFAULT_SELECTION,
+    setSelection: (update: Partial<Selection>) =>
+        set((state) => ({ selection: { ...state.selection, ...update } })),
+    clearSelection: () => set({ selection: DEFAULT_SELECTION }),
 }));
