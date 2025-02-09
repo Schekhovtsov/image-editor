@@ -1,12 +1,15 @@
 import { type MouseEvent, RefObject, useEffect, useState } from 'react';
 
 import { useEditorStore } from '../model/editorStore';
+import { useLayersStore } from '../model/layersStore';
+import { getRandomColor } from '../model/utils';
 
 type UseMouseParams = {
+    canvasRef: RefObject<HTMLCanvasElement>;
     selectionCanvasRef: RefObject<HTMLCanvasElement>;
 };
 
-export const useMouse = ({ selectionCanvasRef }: UseMouseParams) => {
+export const useMouse = ({ canvasRef, selectionCanvasRef }: UseMouseParams) => {
     const [offset, setOffset] = useState({ x: 0, y: 0 });
 
     const { x: canvasX = 0, y: canvasY = 0 } =
@@ -20,6 +23,13 @@ export const useMouse = ({ selectionCanvasRef }: UseMouseParams) => {
     const setSelection = useEditorStore((state) => state.setSelection);
 
     const activeTool = useEditorStore((state) => state.activeTool);
+
+    // const activeLayerId = useLayersStore((state) => state.activeLayer);
+    const activeLayer = useLayersStore((state) =>
+        state.layers.find((layer) => layer.id === state.activeLayer)
+    );
+
+    const saveAction = useLayersStore((state) => state.saveAction);
 
     const onMouseDownHandler = (
         e: MouseEvent<HTMLDivElement | HTMLCanvasElement>
@@ -41,6 +51,38 @@ export const useMouse = ({ selectionCanvasRef }: UseMouseParams) => {
                 endX: e.clientX,
                 endY: e.clientY,
             });
+        }
+
+        if (activeTool === 'fill') {
+            const canvas = canvasRef.current;
+            const context = canvas?.getContext('2d');
+
+            if (canvas && context) {
+                if (activeLayer) {
+                    if (selection.isSelected) {
+                        context.fillStyle = getRandomColor();
+                        context.fillRect(
+                            selection.startX - canvasX,
+                            selection.startY - canvasY,
+                            selection.endX - selection.startX,
+                            selection.endY - selection.startY
+                        );
+                    } else {
+                        context.fillStyle = getRandomColor();
+                        context.fillRect(
+                            offset.x,
+                            offset.y,
+                            context.canvas.width,
+                            context.canvas.height
+                        );
+                    }
+
+                    saveAction({
+                        layerId: activeLayer.id,
+                        code: canvas.toDataURL(),
+                    });
+                }
+            }
         }
     };
 
@@ -99,7 +141,6 @@ export const useMouse = ({ selectionCanvasRef }: UseMouseParams) => {
             }
 
             if (activeTool === 'selection') {
-                console.log('SELECTION: ', selection);
                 context.clearRect(0, 0, canvas.width, canvas.height);
                 context.strokeStyle = '#6d6d6d';
                 context.lineWidth = 1;

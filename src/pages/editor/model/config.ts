@@ -6,6 +6,7 @@ export const INITIAL_LAYER = {
     visible: true,
     effects: { opacity: 1 },
     fill: '#ffffff',
+    code: null,
 };
 
 export const DEFAULT_SELECTION = {

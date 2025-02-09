@@ -2,7 +2,6 @@ import { create } from 'zustand';
 
 import { INITIAL_LAYER } from './config';
 import { Layer } from './types';
-import { getRandomColor } from './utils';
 
 type State = {
     layers: Layer[];
@@ -14,6 +13,7 @@ type Actions = {
     changeLayerVisibility: (id: number | null) => void;
     addLayer: () => void;
     deleteLayer: (id: number) => void;
+    saveAction: ({ layerId, code }: { layerId: number; code: string }) => void;
 };
 
 export const useLayersStore = create<State & Actions>((set) => ({
@@ -43,7 +43,8 @@ export const useLayersStore = create<State & Actions>((set) => ({
                               name: `Слой ${state.layers.length + 1}`,
                               visible: true,
                               effects: { opacity: 1 },
-                              fill: getRandomColor(),
+                              fill: '#ffffff',
+                              code: null,
                           },
                       ],
             activeLayer: state.layers.length + 1,
@@ -52,5 +53,14 @@ export const useLayersStore = create<State & Actions>((set) => ({
         set((state) => ({
             ...state,
             layers: state.layers.filter((layer) => layer.id !== layerId),
+        })),
+    saveAction: ({ layerId, code }) =>
+        set((state) => ({
+            layers: state.layers.map((layer) => {
+                if (layer.id === layerId) {
+                    return { ...layer, code: code };
+                }
+                return layer;
+            }),
         })),
 }));

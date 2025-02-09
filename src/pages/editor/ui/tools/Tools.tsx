@@ -17,7 +17,10 @@ export const Tools = () => {
 
     const changeToolHandler = (tool: Tool | null) => () => {
         setActiveTool(tool);
-        clearSelection();
+
+        if (!tool) {
+            clearSelection();
+        }
     };
 
     const iconProps = {

@@ -15,10 +15,6 @@ export const Canvas: FC<CanvasProps> = ({ canvasRef }) => {
     const canvasState = useEditorStore((state) => state.canvas);
 
     const layers = useLayersStore((state) => state.layers);
-    // const activeLayerId = useLayersStore((state) => state.activeLayer);
-    // const activeLayer = useLayersStore((state) =>
-    //     state.layers.find((layer) => layer.id === state.activeLayer)
-    // );
 
     const {
         mouseEvents: {
@@ -30,7 +26,7 @@ export const Canvas: FC<CanvasProps> = ({ canvasRef }) => {
         offset,
         activeTool,
         isDragging,
-    } = useMouse({ selectionCanvasRef });
+    } = useMouse({ canvasRef, selectionCanvasRef });
 
     useEffect(() => {
         const drawImage = () => {
@@ -40,6 +36,24 @@ export const Canvas: FC<CanvasProps> = ({ canvasRef }) => {
             if (context) {
                 layers.forEach((layer) => {
                     if (layer.visible) {
+                        const img = new Image();
+                        const code = layer.code;
+
+                        if (code) {
+                            img.src = code;
+                            img.onload = () => {
+                                context.clearRect(
+                                    0,
+                                    0,
+                                    context.canvas.width,
+                                    context.canvas.height
+                                );
+                                context.drawImage(img, 0, 0);
+                            };
+
+                            return;
+                        }
+
                         context.globalAlpha = layer.effects.opacity;
                         // Применяем эффекты (например, сепия)
                         //   const processedImageData = applySepia(layer.imageData);

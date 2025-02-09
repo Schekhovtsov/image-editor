@@ -12,6 +12,7 @@ export type Layer = {
     visible: boolean;
     effects: Effect;
     fill: string;
+    code: string | null;
 };
 
 export type Selection = {
