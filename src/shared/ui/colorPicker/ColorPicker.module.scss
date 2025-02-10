@@ -1,0 +1,12 @@
+.button {
+    width: 20px;
+    height: 20px;
+    border: 1px solid var(--window-border);
+    border-radius: 3px;
+    cursor: pointer;
+}
+
+.picker {
+    padding: 0 0 0 20px;
+    overflow: hidden;
+}

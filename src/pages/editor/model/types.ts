@@ -1,6 +1,6 @@
 export type Window = 'create' | 'tools' | 'layers';
 
-export type Tool = 'move' | 'fill' | 'selection';
+export type Tool = 'move' | 'fill' | 'selection' | null;
 
 export type Effect = {
     opacity: number;
@@ -22,3 +22,5 @@ export type Selection = {
     endY: number;
     isSelected: boolean;
 };
+
+export type Color = string;

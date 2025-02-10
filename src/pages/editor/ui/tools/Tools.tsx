@@ -2,6 +2,7 @@ import CursorIcon from '../../../../shared/assets/icons/cursor.svg?react';
 import FillIcon from '../../../../shared/assets/icons/fill.svg?react';
 import MoveIcon from '../../../../shared/assets/icons/move.svg?react';
 import SelectionIcon from '../../../../shared/assets/icons/selection.svg?react';
+import { ColorPicker } from '../../../../shared/ui/colorPicker/ColorPicker';
 import { Window } from '../../../../shared/ui/window/Window';
 import { TOOL_ICON_COLOR } from '../../model/config';
 import { useEditorStore } from '../../model/editorStore';
@@ -34,7 +35,7 @@ export const Tools = () => {
             isOpen={tools}
             withoutButtons
             width={40}
-            height={150}
+            height={190}
             inCenterOfScreen={false}
             initialPosition={{ x: 10, y: 150 }}
             showDragPoint
@@ -69,6 +70,7 @@ export const Tools = () => {
                 >
                     <FillIcon {...iconProps} />
                 </button>
+                <ColorPicker />
             </div>
         </Window>
     );
