@@ -1,5 +1,4 @@
 import { create } from 'zustand';
-import { devtools } from 'zustand/middleware';
 
 import { DEFAULT_SELECTION } from './config';
 import { Selection, Tool, Window } from './types';
@@ -10,8 +9,9 @@ type State = {
         width: number;
         height: number;
     } | null;
-    activeTool: Tool | null;
+    activeTool: Tool;
     selection: Selection;
+    color: string;
 };
 
 type Actions = {
@@ -28,6 +28,7 @@ type Actions = {
     setActiveTool: (tool: Tool | null) => void;
     setSelection: (selection: Partial<Selection>) => void;
     clearSelection: () => void;
+    setColor: (color: string) => void;
 };
 
 export const useEditorStore = create<State & Actions>()((set) => ({
@@ -36,6 +37,7 @@ export const useEditorStore = create<State & Actions>()((set) => ({
         tools: false,
         layers: false,
     },
+    color: '#ffffff',
     canvas: null,
     activeTool: null,
     setActiveTool: (tool: Tool | null) => set({ activeTool: tool }),
@@ -62,4 +64,5 @@ export const useEditorStore = create<State & Actions>()((set) => ({
     setSelection: (update: Partial<Selection>) =>
         set((state) => ({ selection: { ...state.selection, ...update } })),
     clearSelection: () => set({ selection: DEFAULT_SELECTION }),
+    setColor: (color: string) => set({ color }),
 }));
