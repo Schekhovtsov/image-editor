@@ -1,8 +1,8 @@
+import { useEditorStore } from 'pages/editor/model/editorStore';
+import { useLayersStore } from 'pages/editor/model/layersStore';
 import { useState } from 'react';
+import { Window } from 'shared/ui/window/Window';
 
-import { useEditorStore } from '../../../pages/editor/model/editorStore';
-import { useLayersStore } from '../../../pages/editor/model/layersStore';
-import { Window } from '../../../shared/ui/window/Window';
 import styles from './CreateWindow.module.scss';
 
 export const CreateWindow = () => {

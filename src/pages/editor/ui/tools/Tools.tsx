@@ -1,9 +1,10 @@
-import CursorIcon from '../../../../shared/assets/icons/cursor.svg?react';
-import FillIcon from '../../../../shared/assets/icons/fill.svg?react';
-import MoveIcon from '../../../../shared/assets/icons/move.svg?react';
-import SelectionIcon from '../../../../shared/assets/icons/selection.svg?react';
-import { ColorPicker } from '../../../../shared/ui/colorPicker/ColorPicker';
-import { Window } from '../../../../shared/ui/window/Window';
+import CursorIcon from 'shared/assets/icons/cursor.svg?react';
+import FillIcon from 'shared/assets/icons/fill.svg?react';
+import MoveIcon from 'shared/assets/icons/move.svg?react';
+import SelectionIcon from 'shared/assets/icons/selection.svg?react';
+import { Window } from 'shared/ui/window/Window';
+import { ColorPicker } from 'widgets/colorPicker';
+
 import { TOOL_ICON_COLOR } from '../../model/config';
 import { useEditorStore } from '../../model/editorStore';
 import { Tool } from '../../model/types';

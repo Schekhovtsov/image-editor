@@ -6,8 +6,8 @@ import {
     MenuSeparator,
 } from '@headlessui/react';
 import { FC, MouseEvent, RefObject } from 'react';
+import CheckIcon from 'shared/assets/icons/check.svg?react';
 
-import CheckIcon from '../../../../shared/assets/icons/check.svg?react';
 import { useEditorStore } from '../../model/editorStore';
 import { Window } from '../../model/types';
 import styles from './Navbar.module.scss';

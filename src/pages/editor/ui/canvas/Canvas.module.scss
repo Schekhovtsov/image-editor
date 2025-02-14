@@ -13,3 +13,9 @@
     position: absolute;
     pointer-events: none;
 }
+
+.fillCursor {
+    canvas {
+        cursor: crosshair;
+    }
+}

@@ -1,6 +1,6 @@
 import { useRef } from 'react';
+import { CreateWindow } from 'widgets/createWindow';
 
-import { CreateWindow } from '../../widgets/createWindow';
 import { Canvas } from './ui/canvas';
 import { Footer } from './ui/footer/Footer';
 import { Layers } from './ui/layers/Layers';
