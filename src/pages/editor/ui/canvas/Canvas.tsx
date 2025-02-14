@@ -1,4 +1,5 @@
-import { FC, MouseEvent, RefObject, useEffect, useRef, useState } from 'react';
+import clsx from 'clsx';
+import { FC, RefObject, useEffect, useRef } from 'react';
 
 import { useMouse } from '../../lib/useMouse';
 import { useEditorStore } from '../../model/editorStore';
@@ -77,7 +78,10 @@ export const Canvas: FC<CanvasProps> = ({ canvasRef }) => {
 
     return (
         <div
-            className={styles.container}
+            className={clsx(
+                styles.container,
+                activeTool === 'fill' && styles.fillCursor
+            )}
             onMouseDown={onMouseDownHandler}
             onMouseMove={onMouseMoveHandler}
             onMouseUp={onMouseUpHandler}

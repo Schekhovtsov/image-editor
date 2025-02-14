@@ -1,10 +1,10 @@
 import clsx from 'clsx';
 import { type MouseEvent } from 'react';
+import CrossIcon from 'shared/assets/icons/cross.svg?react';
+import EyeIcon from 'shared/assets/icons/eye.svg?react';
+import PlusIcon from 'shared/assets/icons/plus.svg?react';
+import { Window } from 'shared/ui/window/Window';
 
-import CrossIcon from '../../../../shared/assets/icons/cross.svg?react';
-import EyeIcon from '../../../../shared/assets/icons/eye.svg?react';
-import PlusIcon from '../../../../shared/assets/icons/plus.svg?react';
-import { Window } from '../../../../shared/ui/window/Window';
 import { useEditorStore } from '../../model/editorStore';
 import { useLayersStore } from '../../model/layersStore';
 import { LAYERS_HEIGHT, LAYERS_WIDTH, RIGHT_OFFSET } from './config';

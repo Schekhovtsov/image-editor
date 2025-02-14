@@ -1,4 +1,5 @@
-import { Editor } from '../pages/editor/index.tsx';
+import { Editor } from 'pages/editor/index.tsx';
+
 import styles from './App.module.scss';
 
 function App() {

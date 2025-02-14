@@ -23,6 +23,7 @@ export const useMouse = ({ canvasRef, selectionCanvasRef }: UseMouseParams) => {
     const setSelection = useEditorStore((state) => state.setSelection);
 
     const activeTool = useEditorStore((state) => state.activeTool);
+    const activeColor = useEditorStore((state) => state.color);
 
     // const activeLayerId = useLayersStore((state) => state.activeLayer);
     const activeLayer = useLayersStore((state) =>
@@ -59,8 +60,19 @@ export const useMouse = ({ canvasRef, selectionCanvasRef }: UseMouseParams) => {
 
             if (canvas && context) {
                 if (activeLayer) {
-                    if (selection.isSelected) {
-                        context.fillStyle = getRandomColor();
+                    context.fillStyle = activeColor;
+
+                const mouseX = e.nativeEvent.offsetX;
+                const mouseY = e.nativeEvent.offsetY;
+
+                const isInsideSelection =
+                    selection.isSelected &&
+                    mouseX >= selection.startX - canvasX &&
+                    mouseX <= selection.endX - canvasX &&
+                    mouseY >= selection.startY - canvasY &&
+                    mouseY <= selection.endY - canvasY;
+
+                    if (isInsideSelection) {
                         context.fillRect(
                             selection.startX - canvasX,
                             selection.startY - canvasY,
@@ -68,7 +80,6 @@ export const useMouse = ({ canvasRef, selectionCanvasRef }: UseMouseParams) => {
                             selection.endY - selection.startY
                         );
                     } else {
-                        context.fillStyle = getRandomColor();
                         context.fillRect(
                             offset.x,
                             offset.y,
