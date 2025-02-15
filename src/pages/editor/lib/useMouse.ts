@@ -55,12 +55,11 @@ export const useMouse = ({ canvasRef, selectionCanvasRef }: UseMouseParams) => {
         }
 
         if (activeTool === 'fill') {
-            const canvas = canvasRef.current;
-            const context = canvas?.getContext('2d');
+            const layerCanvas = activeLayer?.canvas;
+            const layerContext = layerCanvas?.getContext('2d');
 
-            if (canvas && context) {
-                if (activeLayer) {
-                    context.fillStyle = activeColor;
+            if (layerCanvas && layerContext && activeLayer) {
+                layerContext.fillStyle = activeColor;
 
                 const mouseX = e.nativeEvent.offsetX;
                 const mouseY = e.nativeEvent.offsetY;
@@ -72,27 +71,26 @@ export const useMouse = ({ canvasRef, selectionCanvasRef }: UseMouseParams) => {
                     mouseY >= selection.startY - canvasY &&
                     mouseY <= selection.endY - canvasY;
 
-                    if (isInsideSelection) {
-                        context.fillRect(
-                            selection.startX - canvasX,
-                            selection.startY - canvasY,
-                            selection.endX - selection.startX,
-                            selection.endY - selection.startY
-                        );
-                    } else {
-                        context.fillRect(
-                            offset.x,
-                            offset.y,
-                            context.canvas.width,
-                            context.canvas.height
-                        );
-                    }
-
-                    saveAction({
-                        layerId: activeLayer.id,
-                        code: canvas.toDataURL(),
-                    });
+                if (isInsideSelection) {
+                    layerContext.fillRect(
+                        selection.startX - canvasX,
+                        selection.startY - canvasY,
+                        selection.endX - selection.startX,
+                        selection.endY - selection.startY
+                    );
+                } else {
+                    layerContext.fillRect(
+                        offset.x,
+                        offset.y,
+                        layerContext.canvas.width,
+                        layerContext.canvas.height
+                    );
                 }
+
+                saveAction({
+                    layerId: activeLayer.id,
+                    canvas: layerCanvas,
+                });
             }
         }
     };

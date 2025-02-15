@@ -19,7 +19,7 @@ export const Footer = () => {
                         Размер холста: {canvasState.width} x{' '}
                         {canvasState.height}
                     </span>
-                    {activeTool === 'selection' && (
+                    {selectedArea.isSelected || activeTool === 'selection' && (
                         <span>
                             Размер выделенной области: {selectedAreaSize.width}{' '}
                             x {selectedAreaSize.height}

@@ -12,7 +12,8 @@ export type Layer = {
     visible: boolean;
     effects: Effect;
     fill: string;
-    code: string | null;
+    canvas: HTMLCanvasElement;
+    initialized: boolean;
 };
 
 export type Selection = {
