@@ -16,6 +16,7 @@ export const Canvas: FC<CanvasProps> = ({ canvasRef }) => {
     const canvasState = useEditorStore((state) => state.canvas);
 
     const layers = useLayersStore((state) => state.layers);
+    const initializeLayer = useLayersStore((state) => state.initializeLayer);
 
     const {
         mouseEvents: {
@@ -29,52 +30,72 @@ export const Canvas: FC<CanvasProps> = ({ canvasRef }) => {
         isDragging,
     } = useMouse({ canvasRef, selectionCanvasRef });
 
+    // useEffect(() => {
+    //     if (canvasState) {
+    //         layers.forEach((layer) => {
+    //             layer.canvas.width = canvasState.width;
+    //             layer.canvas.height = canvasState.height;
+    //             const layerContext = layer.canvas.getContext('2d');
+
+    //             if (layerContext) {
+    //                 layerContext.fillStyle = '#ffffff';
+    //                 layerContext.fillRect(
+    //                     0,
+    //                     0,
+    //                     canvasState.width,
+    //                     canvasState.height
+    //                 );
+    //             }
+    //         });
+    //     }
+    // }, [canvasState]);
+
     useEffect(() => {
-        const drawImage = () => {
-            const canvas = canvasRef.current;
-            const context = canvas?.getContext('2d');
-
-            if (context) {
-                layers.forEach((layer) => {
-                    if (layer.visible) {
-                        const img = new Image();
-                        const code = layer.code;
-
-                        if (code) {
-                            img.src = code;
-                            img.onload = () => {
-                                context.clearRect(
-                                    0,
-                                    0,
-                                    context.canvas.width,
-                                    context.canvas.height
-                                );
-                                context.drawImage(img, 0, 0);
-                            };
-
-                            return;
-                        }
-
-                        context.globalAlpha = layer.effects.opacity;
-                        // Применяем эффекты (например, сепия)
-                        //   const processedImageData = applySepia(layer.imageData);
-
-                        context.fillStyle = layer.fill;
-                        context.fillRect(
-                            offset.x,
-                            offset.y,
-                            context.canvas.width,
-                            context.canvas.height
+        if (canvasState) {
+            layers.forEach((layer) => {
+                if (!layer.initialized) {
+                    layer.canvas.width = canvasState.width;
+                    layer.canvas.height = canvasState.height;
+                    const layerContext = layer.canvas.getContext('2d');
+    
+                    if (layerContext) {
+                        layerContext.fillStyle = layer.fill;
+                        layerContext.fillRect(
+                            0,
+                            0,
+                            canvasState.width,
+                            canvasState.height
                         );
-
-                        context.globalAlpha = 1.0;
                     }
-                });
-            }
-        };
 
-        drawImage();
-    }, [canvasRef, canvasState, offset, layers]);
+                    initializeLayer({ layerId: layer.id })
+                }
+              
+            });
+        }
+
+        renderLayers();
+    }, [canvasState, layers]);
+
+    const renderLayers = () => {
+        const canvas = canvasRef.current;
+        const context = canvas?.getContext('2d');
+
+        if (context) {
+            context.clearRect(
+                0,
+                0,
+                context.canvas.width,
+                context.canvas.height
+            );
+
+            layers.forEach((layer) => {
+                if (layer.visible) {
+                    context.drawImage(layer.canvas, 0, 0);
+                }
+            });
+        }
+    };
 
     return (
         <div

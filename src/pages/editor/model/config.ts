@@ -6,7 +6,8 @@ export const INITIAL_LAYER = {
     visible: true,
     effects: { opacity: 1 },
     fill: '#ffffff',
-    code: null,
+    canvas: document.createElement('canvas'),
+    initialized: false,
 };
 
 export const DEFAULT_SELECTION = {

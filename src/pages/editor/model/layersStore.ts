@@ -13,7 +13,14 @@ type Actions = {
     changeLayerVisibility: (id: number | null) => void;
     addLayer: () => void;
     deleteLayer: (id: number) => void;
-    saveAction: ({ layerId, code }: { layerId: number; code: string }) => void;
+    saveAction: ({
+        layerId,
+        canvas,
+    }: {
+        layerId: number;
+        canvas: HTMLCanvasElement;
+    }) => void;
+    initializeLayer: ({ layerId }: { layerId: number }) => void;
 };
 
 export const useLayersStore = create<State & Actions>((set) => ({
@@ -43,8 +50,9 @@ export const useLayersStore = create<State & Actions>((set) => ({
                               name: `Слой ${state.layers.length + 1}`,
                               visible: true,
                               effects: { opacity: 1 },
-                              fill: '#ffffff',
-                              code: null,
+                              fill: 'transparent',
+                              canvas: document.createElement('canvas'),
+                              initialized: false,
                           },
                       ],
             activeLayer: state.layers.length + 1,
@@ -54,13 +62,22 @@ export const useLayersStore = create<State & Actions>((set) => ({
             ...state,
             layers: state.layers.filter((layer) => layer.id !== layerId),
         })),
-    saveAction: ({ layerId, code }) =>
+    saveAction: ({ layerId, canvas }) =>
         set((state) => ({
             layers: state.layers.map((layer) => {
                 if (layer.id === layerId) {
-                    return { ...layer, code: code };
+                    return { ...layer, canvas: canvas };
                 }
                 return layer;
             }),
         })),
+        initializeLayer: ({ layerId }) =>
+            set((state) => ({
+                layers: state.layers.map((layer) => {
+                    if (layer.id === layerId) {
+                        return { ...layer, initialized: true };
+                    }
+                    return layer;
+                }),
+            })),
 }));
