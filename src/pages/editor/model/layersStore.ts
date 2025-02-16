@@ -2,6 +2,7 @@ import { create } from 'zustand';
 
 import { INITIAL_LAYER } from './config';
 import { Layer } from './types';
+import { arrayMove } from '@dnd-kit/sortable';
 
 type State = {
     layers: Layer[];
@@ -21,6 +22,7 @@ type Actions = {
         canvas: HTMLCanvasElement;
     }) => void;
     initializeLayer: ({ layerId }: { layerId: number }) => void;
+    reorderLayers: ({ fromIndex, toIndex }: { fromIndex: number; toIndex: number }) => void
 };
 
 export const useLayersStore = create<State & Actions>((set) => ({
@@ -80,4 +82,9 @@ export const useLayersStore = create<State & Actions>((set) => ({
                     return layer;
                 }),
             })),
+        reorderLayers: ({ fromIndex, toIndex }: { fromIndex: number; toIndex: number }) => {
+            set((state) => ({
+                layers: arrayMove(state.layers, fromIndex, toIndex),
+            }));
+        }
 }));

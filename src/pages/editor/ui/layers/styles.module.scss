@@ -29,6 +29,10 @@
     background-color: var(--background-layer-active);
 }
 
+.dragging {
+    border: 1px solid var(--window-border);
+}
+
 .eyeIconButton {
     display: flex;
     align-items: center;
