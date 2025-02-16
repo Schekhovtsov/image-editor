@@ -11,18 +11,31 @@
 }
 
 .item {
-    display: flex;
+    display: grid;
+    grid-template-columns: 30px minmax(0, 100px) auto 30px;
     align-items: center;
-    justify-content: space-between;
     height: 50px;
     padding: 10px;
     gap: 10px;
 
-    & > div {
-        display: flex;
-        align-items: center;
-        gap: 10px;
+    span {
+        overflow: hidden;
+        display: -webkit-box;
+        -webkit-line-clamp: 2;
+        line-clamp: 2;
+        -webkit-box-orient: vertical;
     }
+}
+
+.dragElement {
+    width: 20px;
+    color: var(--icon);
+    cursor: grab;
+}
+
+.dragZone {
+    height: 100%;
+    cursor: grab;
 }
 
 .active {

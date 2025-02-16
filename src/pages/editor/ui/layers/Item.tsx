@@ -6,6 +6,7 @@ import { useLayersStore } from 'pages/editor/model/layersStore';
 import { FC, type MouseEvent } from 'react';
 import CrossIcon from 'shared/assets/icons/cross.svg?react';
 import EyeIcon from 'shared/assets/icons/eye.svg?react';
+import GrabIcon from 'shared/assets/icons/grab.svg?react';
 
 import styles from './styles.module.scss';
 
@@ -38,7 +39,7 @@ export const Item: FC<ItemProps> = ({ id, name, visible, over }) => {
         transform: CSS.Transform.toString(transform),
         transition,
         opacity: isDragging ? 0.5 : 1,
-        cursor: isDragging ? 'grabbing' : 'grab',
+        cursor: isDragging ? 'grabbing' : 'auto',
     };
 
     const toggleActiveLayerHandler = (layerId: number) => () => {
@@ -66,8 +67,6 @@ export const Item: FC<ItemProps> = ({ id, name, visible, over }) => {
             )}
             ref={draggableRef}
             style={style}
-            {...listeners}
-            {...attributes}
             onClick={toggleActiveLayerHandler(id)}
         >
             <div>
@@ -81,8 +80,9 @@ export const Item: FC<ItemProps> = ({ id, name, visible, over }) => {
                         className={clsx(!visible && styles.hidden)}
                     />
                 </button>
-                {name}
             </div>
+            <span>{name}</span>
+            <div {...listeners} {...attributes} className={styles.dragZone} />
             <button onClick={onDeleteLayerHandler(id)} title="Удалить слой">
                 <CrossIcon className={styles.crossIcon} />
             </button>

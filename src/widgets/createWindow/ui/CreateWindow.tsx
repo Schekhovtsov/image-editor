@@ -25,7 +25,7 @@ export const CreateWindow = () => {
         createNewImage(canvasSize);
         addLayer();
     };
-
+    
     return (
         <Window
             title="Создать"
