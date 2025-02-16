@@ -53,6 +53,8 @@ export const Window: FC<WindowProps> = ({
     showDragPoint = false,
     bodyClassName,
 }) => {
+    const onSaveButtonRef = useRef<HTMLButtonElement | null>(null);
+
     const [isDragging, setIsDragging] = useState(false);
 
     const _position = inCenterOfScreen
@@ -90,13 +92,23 @@ export const Window: FC<WindowProps> = ({
         };
     };
 
+    const onKeyDown = (e: KeyboardEvent) => {
+        if (e.key === 'Escape') {
+            onClose?.();
+        } else if (e.key === 'Enter') {
+            onSave?.();
+        }
+    };
+
     useEffect(() => {
         window.addEventListener('mousemove', onMouseMove);
         window.addEventListener('mouseup', onMouseUp);
+        // window.addEventListener('keydown', onKeyDown);
 
         return () => {
             window.removeEventListener('mousemove', onMouseMove);
             window.removeEventListener('mouseup', onMouseUp);
+            // window.removeEventListener('keydown', onKeyDown);
         };
     }, [onMouseMove]);
 
@@ -105,6 +117,10 @@ export const Window: FC<WindowProps> = ({
             setPosition(_position);
         };
     }, []);
+
+    useEffect(() => {
+        onSaveButtonRef.current?.focus();
+    }, [isOpen]);
 
     if (!isOpen) {
         return null;
@@ -131,7 +147,9 @@ export const Window: FC<WindowProps> = ({
             {!withoutButtons && (
                 <div className={styles.footer}>
                     <button onClick={onClose}>Отмена</button>
-                    <button onClick={onSave}>Принять</button>
+                    <button onClick={onSave} ref={onSaveButtonRef}>
+                        Принять
+                    </button>
                 </div>
             )}
         </div>

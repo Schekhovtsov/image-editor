@@ -25,7 +25,7 @@ export const Navbar: FC<NavbarProps> = ({ canvasRef }) => {
 
     const toggleWindowHandler =
         (preventDefault?: boolean) =>
-        (event: MouseEvent<HTMLButtonElement>) => {
+        (event: MouseEvent<HTMLButtonElement>) => {;
             if (preventDefault) event.preventDefault();
             const window = event.currentTarget.name as Window;
             toggleWindow(window);

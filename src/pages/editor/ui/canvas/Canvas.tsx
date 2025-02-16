@@ -30,26 +30,6 @@ export const Canvas: FC<CanvasProps> = ({ canvasRef }) => {
         isDragging,
     } = useMouse({ canvasRef, selectionCanvasRef });
 
-    // useEffect(() => {
-    //     if (canvasState) {
-    //         layers.forEach((layer) => {
-    //             layer.canvas.width = canvasState.width;
-    //             layer.canvas.height = canvasState.height;
-    //             const layerContext = layer.canvas.getContext('2d');
-
-    //             if (layerContext) {
-    //                 layerContext.fillStyle = '#ffffff';
-    //                 layerContext.fillRect(
-    //                     0,
-    //                     0,
-    //                     canvasState.width,
-    //                     canvasState.height
-    //                 );
-    //             }
-    //         });
-    //     }
-    // }, [canvasState]);
-
     useEffect(() => {
         if (canvasState) {
             layers.forEach((layer) => {
