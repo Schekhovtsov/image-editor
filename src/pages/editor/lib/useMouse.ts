@@ -28,7 +28,7 @@ export const useMouse = ({ selectionCanvasRef }: UseMouseParams) => {
         state.layers.find((layer) => layer.id === state.activeLayer)
     );
 
-    const saveAction = useLayersStore((state) => state.saveAction);
+    const updateCanvas = useLayersStore((state) => state.updateCanvas);
 
     const onMouseDownHandler = (
         e: MouseEvent<HTMLDivElement | HTMLCanvasElement>
@@ -85,7 +85,7 @@ export const useMouse = ({ selectionCanvasRef }: UseMouseParams) => {
                     );
                 }
 
-                saveAction({
+                updateCanvas({
                     layerId: activeLayer.id,
                     canvas: layerCanvas,
                 });

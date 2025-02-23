@@ -14,6 +14,7 @@ type CanvasProps = {
 export const Canvas: FC<CanvasProps> = ({ canvasRef }) => {
     const selectionCanvasRef = useRef<HTMLCanvasElement>(null);
     const canvasState = useEditorStore((state) => state.canvas);
+    const isImageWasOpened = useEditorStore((state) => state.isImageWasOpened);
 
     const layers = useLayersStore((state) => state.layers);
     const initializeLayer = useLayersStore((state) => state.initializeLayer);
@@ -30,12 +31,11 @@ export const Canvas: FC<CanvasProps> = ({ canvasRef }) => {
         isDragging,
     } = useMouse({ selectionCanvasRef });
 
+   
     useEffect(() => {
         if (canvasState) {
-            console.log('Я сработал');
             layers.forEach(({ id, initialized, canvas, fill }) => {
                 if (!initialized) {
-                    console.log('Инициализация слоя');
                     canvas.width = canvasState.width;
                     canvas.height = canvasState.height;
                     const layerContext = canvas.getContext('2d');
@@ -58,10 +58,9 @@ export const Canvas: FC<CanvasProps> = ({ canvasRef }) => {
         if (layers.length) {
             renderLayers();
         }
-    }, [canvasState, layers]);
+    }, [canvasState, layers, isImageWasOpened]);
 
     const renderLayers = () => {
-        console.log('Рендеринг слоёв');
         const canvas = canvasRef.current;
         const context = canvas?.getContext('2d');
 

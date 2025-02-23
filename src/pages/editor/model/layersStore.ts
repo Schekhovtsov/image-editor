@@ -14,7 +14,7 @@ type Actions = {
     changeLayerVisibility: (id: number | null) => void;
     addLayer: () => void;
     deleteLayer: (id: number) => void;
-    saveAction: ({
+    updateCanvas: ({
         layerId,
         canvas,
     }: {
@@ -29,7 +29,7 @@ type Actions = {
         fromIndex: number;
         toIndex: number;
     }) => void;
-    openImageFromPC: ({ file }: { file: Blob }) => void;
+    openImageFromPC: ({ file, onImageLoad }: { file: Blob, onImageLoad: () => void }) => void;
 };
 
 export const useLayersStore = create<State & Actions>((set) => ({
@@ -71,7 +71,7 @@ export const useLayersStore = create<State & Actions>((set) => ({
             ...state,
             layers: state.layers.filter((layer) => layer.id !== layerId),
         })),
-    saveAction: ({ layerId, canvas }) =>
+    updateCanvas: ({ layerId, canvas }) =>
         set((state) => ({
             layers: state.layers.map((layer) => {
                 if (layer.id === layerId) {
@@ -100,7 +100,7 @@ export const useLayersStore = create<State & Actions>((set) => ({
             layers: arrayMove(state.layers, fromIndex, toIndex),
         }));
     },
-    openImageFromPC: ({ file }) => {
+    openImageFromPC: ({ file, onImageLoad }) => {
         set((state) => {
             const canvas = document.createElement('canvas');
             const context = canvas.getContext('2d');
@@ -112,8 +112,8 @@ export const useLayersStore = create<State & Actions>((set) => ({
                 img.onload = () => {
                     context?.drawImage(img, 0, 0);
                 };
-
                 img.src = e.target?.result as string;
+                setTimeout(() => onImageLoad(), 0);
             };
 
             reader.readAsDataURL(file);
