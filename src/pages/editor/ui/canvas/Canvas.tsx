@@ -28,18 +28,20 @@ export const Canvas: FC<CanvasProps> = ({ canvasRef }) => {
         offset,
         activeTool,
         isDragging,
-    } = useMouse({ canvasRef, selectionCanvasRef });
+    } = useMouse({ selectionCanvasRef });
 
     useEffect(() => {
         if (canvasState) {
-            layers.forEach((layer) => {
-                if (!layer.initialized) {
-                    layer.canvas.width = canvasState.width;
-                    layer.canvas.height = canvasState.height;
-                    const layerContext = layer.canvas.getContext('2d');
-    
+            console.log('Я сработал');
+            layers.forEach(({ id, initialized, canvas, fill }) => {
+                if (!initialized) {
+                    console.log('Инициализация слоя');
+                    canvas.width = canvasState.width;
+                    canvas.height = canvasState.height;
+                    const layerContext = canvas.getContext('2d');
+
                     if (layerContext) {
-                        layerContext.fillStyle = layer.fill;
+                        layerContext.fillStyle = fill;
                         layerContext.fillRect(
                             0,
                             0,
@@ -48,16 +50,18 @@ export const Canvas: FC<CanvasProps> = ({ canvasRef }) => {
                         );
                     }
 
-                    initializeLayer({ layerId: layer.id })
+                    initializeLayer({ layerId: id });
                 }
-              
             });
         }
 
-        renderLayers();
+        if (layers.length) {
+            renderLayers();
+        }
     }, [canvasState, layers]);
 
     const renderLayers = () => {
+        console.log('Рендеринг слоёв');
         const canvas = canvasRef.current;
         const context = canvas?.getContext('2d');
 
