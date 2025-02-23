@@ -2,14 +2,12 @@ import { type MouseEvent, RefObject, useEffect, useState } from 'react';
 
 import { useEditorStore } from '../model/editorStore';
 import { useLayersStore } from '../model/layersStore';
-import { getRandomColor } from '../model/utils';
 
 type UseMouseParams = {
-    canvasRef: RefObject<HTMLCanvasElement>;
     selectionCanvasRef: RefObject<HTMLCanvasElement>;
 };
 
-export const useMouse = ({ canvasRef, selectionCanvasRef }: UseMouseParams) => {
+export const useMouse = ({ selectionCanvasRef }: UseMouseParams) => {
     const [offset, setOffset] = useState({ x: 0, y: 0 });
 
     const { x: canvasX = 0, y: canvasY = 0 } =

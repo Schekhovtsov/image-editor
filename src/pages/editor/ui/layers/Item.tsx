@@ -6,7 +6,6 @@ import { useLayersStore } from 'pages/editor/model/layersStore';
 import { FC, type MouseEvent } from 'react';
 import CrossIcon from 'shared/assets/icons/cross.svg?react';
 import EyeIcon from 'shared/assets/icons/eye.svg?react';
-import GrabIcon from 'shared/assets/icons/grab.svg?react';
 
 import styles from './styles.module.scss';
 
@@ -17,7 +16,7 @@ type ItemProps = {
     over: Over | null;
 };
 
-export const Item: FC<ItemProps> = ({ id, name, visible, over }) => {
+export const Item: FC<ItemProps> = ({ id, name, visible }) => {
     const activeLayer = useLayersStore((state) => state.activeLayer);
 
     const changeActiveLayer = useLayersStore((state) => state.setActiveLayer);

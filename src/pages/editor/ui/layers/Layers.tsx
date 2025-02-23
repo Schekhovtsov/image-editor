@@ -15,6 +15,7 @@ import styles from './styles.module.scss';
 export const Layers = () => {
     const windows = useEditorStore((state) => state.windows);
     const layers = useLayersStore((state) => state.layers);
+    
     const reorderLayers = useLayersStore((state) => state.reorderLayers);
 
     const x =

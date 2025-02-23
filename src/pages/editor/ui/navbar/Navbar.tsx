@@ -5,10 +5,11 @@ import {
     MenuItems,
     MenuSeparator,
 } from '@headlessui/react';
-import { FC, MouseEvent, RefObject } from 'react';
+import { ChangeEvent, FC, MouseEvent, RefObject, useRef } from 'react';
 import CheckIcon from 'shared/assets/icons/check.svg?react';
 
 import { useEditorStore } from '../../model/editorStore';
+import { useLayersStore } from '../../model/layersStore';
 import { Window } from '../../model/types';
 import styles from './Navbar.module.scss';
 
@@ -19,13 +20,17 @@ type NavbarProps = {
 export const Navbar: FC<NavbarProps> = ({ canvasRef }) => {
     const canvasState = useEditorStore((state) => state.canvas);
     const toggleWindow = useEditorStore((state) => state.toggleWindow);
+    const setCanvas = useEditorStore((state) => state.setCanvas);
+    const deleteCanvas = useEditorStore((state) => state.deleteCanvas);
+    const openImageFromPC = useLayersStore((state) => state.openImageFromPC);
+
     const { tools, layers } = useEditorStore((state) => state.windows);
 
-    const deleteCanvas = useEditorStore((state) => state.deleteCanvas);
+    const fileInputRef = useRef<HTMLInputElement>(null);
 
     const toggleWindowHandler =
         (preventDefault?: boolean) =>
-        (event: MouseEvent<HTMLButtonElement>) => {;
+        (event: MouseEvent<HTMLButtonElement>) => {
             if (preventDefault) event.preventDefault();
             const window = event.currentTarget.name as Window;
             toggleWindow(window);
@@ -51,6 +56,39 @@ export const Navbar: FC<NavbarProps> = ({ canvasRef }) => {
         }
     };
 
+    const inputHandler = (event: ChangeEvent<HTMLInputElement>) => {
+        const file = event.target.files?.[0];
+
+        if (file) {
+            const reader = new FileReader();
+
+            reader.onload = (e) => {
+                const img = new Image();
+                img.onload = () => {
+                    setCanvas({ width: img.width, height: img.height });
+                    openImageFromPC({
+                        file,
+                    });
+                };
+
+                img.src = e.target?.result as string;
+            };
+
+            reader.readAsDataURL(file);
+
+            if (!(layers && tools)) {
+                toggleWindow('layers');
+                toggleWindow('tools');
+            }
+        }
+    };
+
+    const openImageHandler = () => {
+        if (fileInputRef.current) {
+            fileInputRef.current.click();
+        }
+    };
+
     return (
         <div className={styles.container}>
             <span className={styles.title}>Image Editor</span>
@@ -66,7 +104,18 @@ export const Navbar: FC<NavbarProps> = ({ canvasRef }) => {
                         </button>
                     </MenuItem>
                     <MenuItem>
-                        <button>Открыть...</button>
+                        <>
+                            <button onClick={openImageHandler}>
+                                Открыть...
+                            </button>
+                            <input
+                                type="file"
+                                ref={fileInputRef}
+                                style={{ display: 'none' }}
+                                accept="image/*"
+                                onChange={inputHandler}
+                            />
+                        </>
                     </MenuItem>
                     <MenuItem disabled>
                         <button>Сохранить</button>

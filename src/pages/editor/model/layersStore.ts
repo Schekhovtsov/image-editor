@@ -29,6 +29,7 @@ type Actions = {
         fromIndex: number;
         toIndex: number;
     }) => void;
+    openImageFromPC: ({ file }: { file: Blob }) => void;
 };
 
 export const useLayersStore = create<State & Actions>((set) => ({
@@ -98,5 +99,36 @@ export const useLayersStore = create<State & Actions>((set) => ({
         set((state) => ({
             layers: arrayMove(state.layers, fromIndex, toIndex),
         }));
+    },
+    openImageFromPC: ({ file }) => {
+        set((state) => {
+            const canvas = document.createElement('canvas');
+            const context = canvas.getContext('2d');
+
+            const reader = new FileReader();
+
+            reader.onload = (e) => {
+                const img = new Image();
+                img.onload = () => {
+                    context?.drawImage(img, 0, 0);
+                };
+
+                img.src = e.target?.result as string;
+            };
+
+            reader.readAsDataURL(file);
+
+            return {
+                ...state,
+                layers: [
+                    {
+                        ...INITIAL_LAYER,
+                        sourceFromPC: true,
+                        canvas,
+                    },
+                ],
+                activeLayer: 1,
+            };
+        });
     },
 }));
