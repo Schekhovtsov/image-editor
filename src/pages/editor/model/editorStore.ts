@@ -12,6 +12,7 @@ type State = {
     activeTool: Tool;
     selection: Selection;
     color: string;
+    isImageWasOpened: boolean;
 };
 
 type Actions = {
@@ -29,6 +30,7 @@ type Actions = {
     setSelection: (selection: Partial<Selection>) => void;
     clearSelection: () => void;
     setColor: (color: string) => void;
+    setImageWasOpened: (isImageWasOpened: boolean) => void;
 };
 
 export const useEditorStore = create<State & Actions>()((set) => ({
@@ -37,6 +39,7 @@ export const useEditorStore = create<State & Actions>()((set) => ({
         tools: false,
         layers: false,
     },
+    isImageWasOpened: false,
     color: '#ffffff',
     canvas: null,
     activeTool: null,
@@ -65,4 +68,5 @@ export const useEditorStore = create<State & Actions>()((set) => ({
         set((state) => ({ selection: { ...state.selection, ...update } })),
     clearSelection: () => set({ selection: DEFAULT_SELECTION }),
     setColor: (color: string) => set({ color }),
+    setImageWasOpened: (isImageWasOpened: boolean) => set({ isImageWasOpened }),
 }));

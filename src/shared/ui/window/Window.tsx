@@ -1,6 +1,7 @@
 import clsx from 'clsx';
 import { FC, useCallback, useEffect, useRef, useState } from 'react';
 
+import { FOOTER_HEIGHT, HEADER_HEIGHT } from './config';
 import { getInitialPosition } from './utils';
 import styles from './Window.module.scss';
 
@@ -71,9 +72,22 @@ export const Window: FC<WindowProps> = ({
     const onMouseMove = useCallback(
         (e: MouseEvent) => {
             if (!isDragging) return;
+
+            const x = e.clientX - startPos.current.x;
+            const y = e.clientY - startPos.current.y;
+
+            if (x <= 0) return;
+            if (y <= 0 + HEADER_HEIGHT) return;
+            if (x >= document.documentElement.clientWidth - width) return;
+            if (
+                y >=
+                document.documentElement.clientHeight - height - FOOTER_HEIGHT
+            )
+                return;
+
             setPosition({
-                x: e.clientX - startPos.current.x,
-                y: e.clientY - startPos.current.y,
+                x,
+                y,
             });
         },
         [isDragging]
@@ -92,23 +106,13 @@ export const Window: FC<WindowProps> = ({
         };
     };
 
-    const onKeyDown = (e: KeyboardEvent) => {
-        if (e.key === 'Escape') {
-            onClose?.();
-        } else if (e.key === 'Enter') {
-            onSave?.();
-        }
-    };
-
     useEffect(() => {
         window.addEventListener('mousemove', onMouseMove);
         window.addEventListener('mouseup', onMouseUp);
-        // window.addEventListener('keydown', onKeyDown);
 
         return () => {
             window.removeEventListener('mousemove', onMouseMove);
             window.removeEventListener('mouseup', onMouseUp);
-            // window.removeEventListener('keydown', onKeyDown);
         };
     }, [onMouseMove]);
 

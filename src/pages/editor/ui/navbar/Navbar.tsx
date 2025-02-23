@@ -23,6 +23,9 @@ export const Navbar: FC<NavbarProps> = ({ canvasRef }) => {
     const setCanvas = useEditorStore((state) => state.setCanvas);
     const deleteCanvas = useEditorStore((state) => state.deleteCanvas);
     const openImageFromPC = useLayersStore((state) => state.openImageFromPC);
+    const setImageWasOpened = useEditorStore(
+        (state) => state.setImageWasOpened
+    );
 
     const { tools, layers } = useEditorStore((state) => state.windows);
 
@@ -68,6 +71,9 @@ export const Navbar: FC<NavbarProps> = ({ canvasRef }) => {
                     setCanvas({ width: img.width, height: img.height });
                     openImageFromPC({
                         file,
+                        onImageLoad: () => {
+                            setImageWasOpened(true);
+                        },
                     });
                 };
 
