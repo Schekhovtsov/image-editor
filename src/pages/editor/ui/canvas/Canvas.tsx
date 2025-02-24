@@ -15,6 +15,7 @@ export const Canvas: FC<CanvasProps> = ({ canvasRef }) => {
     const selectionCanvasRef = useRef<HTMLCanvasElement>(null);
     const canvasState = useEditorStore((state) => state.canvas);
     const isImageWasOpened = useEditorStore((state) => state.isImageWasOpened);
+    const scale = useEditorStore((state) => state.scale);
 
     const layers = useLayersStore((state) => state.layers);
     const initializeLayer = useLayersStore((state) => state.initializeLayer);
@@ -31,7 +32,6 @@ export const Canvas: FC<CanvasProps> = ({ canvasRef }) => {
         isDragging,
     } = useMouse({ selectionCanvasRef });
 
-   
     useEffect(() => {
         if (canvasState) {
             layers.forEach(({ id, initialized, canvas, fill }) => {
@@ -58,13 +58,18 @@ export const Canvas: FC<CanvasProps> = ({ canvasRef }) => {
         if (layers.length) {
             renderLayers();
         }
-    }, [canvasState, layers, isImageWasOpened]);
+    }, [canvasState, layers, isImageWasOpened, scale]);
 
     const renderLayers = () => {
         const canvas = canvasRef.current;
         const context = canvas?.getContext('2d');
 
-        if (context) {
+        if (context && canvas && canvasState) {
+            context.scale(scale, scale);
+
+            canvas.width = canvasState.width * scale;
+            canvas.height = canvasState.height * scale;
+
             context.clearRect(
                 0,
                 0,
@@ -74,7 +79,17 @@ export const Canvas: FC<CanvasProps> = ({ canvasRef }) => {
 
             layers.forEach((layer) => {
                 if (layer.visible) {
-                    context.drawImage(layer.canvas, 0, 0);
+                    context.drawImage(
+                        layer.canvas,
+                        0,
+                        0,
+                        layer.canvas.width,
+                        layer.canvas.height,
+                        0,
+                        0,
+                        layer.canvas.width * scale,
+                        layer.canvas.height * scale
+                    );
                 }
             });
         }

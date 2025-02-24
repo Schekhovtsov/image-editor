@@ -85,6 +85,7 @@ export const Navbar: FC<NavbarProps> = ({ canvasRef }) => {
             if (!(layers && tools)) {
                 toggleWindow('layers');
                 toggleWindow('tools');
+                toggleWindow('scale');
             }
         }
     };
@@ -165,6 +166,16 @@ export const Navbar: FC<NavbarProps> = ({ canvasRef }) => {
                             disabled={!canvasState}
                         >
                             Слои
+                            {layers && <CheckIcon width={16} height={16} />}
+                        </button>
+                    </MenuItem>
+                    <MenuItem>
+                        <button
+                            name="scale"
+                            onClick={toggleWindowHandler(true)}
+                            disabled={!canvasState}
+                        >
+                            Масштаб
                             {layers && <CheckIcon width={16} height={16} />}
                         </button>
                     </MenuItem>
