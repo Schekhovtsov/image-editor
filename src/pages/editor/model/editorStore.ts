@@ -9,6 +9,7 @@ type State = {
         width: number;
         height: number;
     } | null;
+    scale: number;
     activeTool: Tool;
     selection: Selection;
     color: string;
@@ -17,6 +18,7 @@ type State = {
 
 type Actions = {
     toggleWindow: (window: Window) => void;
+    setScale: (scale: number) => void;
     setCanvas: ({ width, height }: { width: number; height: number }) => void;
     deleteCanvas: () => void;
     createNewImage: ({
@@ -38,7 +40,10 @@ export const useEditorStore = create<State & Actions>()((set) => ({
         create: false,
         tools: false,
         layers: false,
+        scale: false,
     },
+    scale: 1,
+    setScale: (scale: number) => set({ scale }),
     isImageWasOpened: false,
     color: '#ffffff',
     canvas: null,
@@ -60,6 +65,7 @@ export const useEditorStore = create<State & Actions>()((set) => ({
                     create: false,
                     tools: true,
                     layers: true,
+                    scale: true,
                 },
             };
         }),
