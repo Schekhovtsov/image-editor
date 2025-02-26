@@ -1,12 +1,31 @@
 .container {
     display: flex;
     align-items: center;
-    gap: 50px;
+    justify-content: space-between;
     padding: 10px;
     box-sizing: border-box;
     height: var(--footer-height);
     background-color: var(--background-navbar);
     color: var(--text-gray);
+    position: absolute;
+    bottom: 0;
+    width: 100%;
+
+    > div {
+        gap: 50px;
+    }
+
+    .scale {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        gap: 10px;
+
+        input {
+            width: 50px;
+            height: 20px;
+        }
+    }
 
     span {
         font-size: 12px !important;

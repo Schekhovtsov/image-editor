@@ -64,8 +64,11 @@ export const Canvas: FC<CanvasProps> = ({ canvasRef }) => {
         const canvas = canvasRef.current;
         const context = canvas?.getContext('2d');
 
-        if (context && canvas && canvasState) {
-            context.scale(scale, scale);
+        const selectionCanvas = selectionCanvasRef.current;
+
+        if (context && canvas && canvasState && selectionCanvas) {
+            selectionCanvas.width = canvasState?.width * scale;
+            selectionCanvas.height = canvasState?.height * scale;
 
             canvas.width = canvasState.width * scale;
             canvas.height = canvasState.height * scale;

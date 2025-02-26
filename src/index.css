@@ -25,6 +25,10 @@ body {
         border: 1px solid var(--window-border);
         color: var(--text-white);
         padding: 3px 3px 3px 7px;
+
+        &:focus, &:focus-visible, &:focus-within {
+            outline: none;
+        }
     }
 }
 
