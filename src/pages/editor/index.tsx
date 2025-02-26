@@ -2,11 +2,10 @@ import { useRef } from 'react';
 import { CreateWindow } from 'widgets/createWindow';
 
 import { Canvas } from './ui/canvas';
-import { Footer } from './ui/footer/Footer';
-import { Layers } from './ui/layers/Layers';
+import { Footer } from './ui/footer';
+import { Layers } from './ui/layers';
 import { Navbar } from './ui/navbar';
-import { Scale } from './ui/scale/Scale';
-import { Tools } from './ui/tools/Tools';
+import { Tools } from './ui/tools';
 
 export const Editor = () => {
     const canvasRef = useRef<HTMLCanvasElement>(null);
@@ -15,7 +14,6 @@ export const Editor = () => {
         <>
             <Navbar canvasRef={canvasRef} />
             <Canvas canvasRef={canvasRef} />
-            <Scale />
             <CreateWindow />
             <Tools />
             <Layers />

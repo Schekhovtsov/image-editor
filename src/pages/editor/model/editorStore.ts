@@ -65,7 +65,6 @@ export const useEditorStore = create<State & Actions>()((set) => ({
                     create: false,
                     tools: true,
                     layers: true,
-                    scale: true,
                 },
             };
         }),

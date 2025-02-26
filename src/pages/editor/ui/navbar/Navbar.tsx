@@ -139,6 +139,22 @@ export const Navbar: FC<NavbarProps> = ({ canvasRef }) => {
             </Menu>
             <MenuSeparator />
             <Menu>
+                <MenuButton className={styles.topButton}>
+                    Редактировать
+                </MenuButton>
+                <MenuItems
+                    anchor="bottom start"
+                    className={styles.dropdownItems}
+                >
+                    <MenuItem>
+                        <button name="create" onClick={() => {}}>
+                            Изменить размер изображения
+                        </button>
+                    </MenuItem>
+                </MenuItems>
+            </Menu>
+            <MenuSeparator />
+            <Menu>
                 <MenuButton
                     className={styles.topButton}
                     disabled={!canvasState}
@@ -166,16 +182,6 @@ export const Navbar: FC<NavbarProps> = ({ canvasRef }) => {
                             disabled={!canvasState}
                         >
                             Слои
-                            {layers && <CheckIcon width={16} height={16} />}
-                        </button>
-                    </MenuItem>
-                    <MenuItem>
-                        <button
-                            name="scale"
-                            onClick={toggleWindowHandler(true)}
-                            disabled={!canvasState}
-                        >
-                            Масштаб
                             {layers && <CheckIcon width={16} height={16} />}
                         </button>
                     </MenuItem>
