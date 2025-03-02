@@ -1,0 +1,1 @@
+export { ChangeSizeCanvas } from './ChangeSizeCanvas';
