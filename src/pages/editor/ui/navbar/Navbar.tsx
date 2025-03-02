@@ -26,6 +26,9 @@ export const Navbar: FC<NavbarProps> = ({ canvasRef }) => {
     const setImageWasOpened = useEditorStore(
         (state) => state.setImageWasOpened
     );
+    const toggleCanvasSizeMode = useEditorStore(
+        (state) => state.toggleCanvasSizeMode
+    );
 
     const { tools, layers } = useEditorStore((state) => state.windows);
 
@@ -59,41 +62,46 @@ export const Navbar: FC<NavbarProps> = ({ canvasRef }) => {
         }
     };
 
-    const inputHandler = (event: ChangeEvent<HTMLInputElement>) => {
-        const file = event.target.files?.[0];
+    const inputHandler =
+        (close: () => void) => (event: ChangeEvent<HTMLInputElement>) => {
+            const file = event.target.files?.[0];
 
-        if (file) {
-            const reader = new FileReader();
+            if (file) {
+                const reader = new FileReader();
 
-            reader.onload = (e) => {
-                const img = new Image();
-                img.onload = () => {
-                    setCanvas({ width: img.width, height: img.height });
-                    openImageFromPC({
-                        file,
-                        onImageLoad: () => {
-                            setImageWasOpened(true);
-                        },
-                    });
+                reader.onload = (e) => {
+                    const img = new Image();
+                    img.onload = () => {
+                        setCanvas({ width: img.width, height: img.height });
+                        openImageFromPC({
+                            file,
+                            onImageLoad: () => {
+                                setImageWasOpened(true);
+                                close();
+                            },
+                        });
+                    };
+
+                    img.src = e.target?.result as string;
                 };
 
-                img.src = e.target?.result as string;
-            };
+                reader.readAsDataURL(file);
 
-            reader.readAsDataURL(file);
-
-            if (!(layers && tools)) {
-                toggleWindow('layers');
-                toggleWindow('tools');
-                toggleWindow('scale');
+                if (!(layers && tools)) {
+                    toggleWindow('layers');
+                    toggleWindow('tools');
+                }
             }
-        }
-    };
+        };
 
     const openImageHandler = () => {
         if (fileInputRef.current) {
             fileInputRef.current.click();
         }
+    };
+
+    const onChangeCanvasSizeHandler = () => {
+        toggleCanvasSizeMode();
     };
 
     return (
@@ -111,18 +119,20 @@ export const Navbar: FC<NavbarProps> = ({ canvasRef }) => {
                         </button>
                     </MenuItem>
                     <MenuItem>
-                        <>
-                            <button onClick={openImageHandler}>
-                                Открыть...
-                            </button>
-                            <input
-                                type="file"
-                                ref={fileInputRef}
-                                style={{ display: 'none' }}
-                                accept="image/*"
-                                onChange={inputHandler}
-                            />
-                        </>
+                        {({ close }) => (
+                            <>
+                                <button onClick={openImageHandler}>
+                                    Открыть...
+                                </button>
+                                <input
+                                    type="file"
+                                    ref={fileInputRef}
+                                    style={{ display: 'none' }}
+                                    accept="image/*"
+                                    onChange={inputHandler(close)}
+                                />
+                            </>
+                        )}
                     </MenuItem>
                     <MenuItem disabled>
                         <button>Сохранить</button>
@@ -139,7 +149,10 @@ export const Navbar: FC<NavbarProps> = ({ canvasRef }) => {
             </Menu>
             <MenuSeparator />
             <Menu>
-                <MenuButton className={styles.topButton}>
+                <MenuButton
+                    className={styles.topButton}
+                    disabled={!canvasState}
+                >
                     Редактировать
                 </MenuButton>
                 <MenuItems
@@ -147,8 +160,8 @@ export const Navbar: FC<NavbarProps> = ({ canvasRef }) => {
                     className={styles.dropdownItems}
                 >
                     <MenuItem>
-                        <button name="create" onClick={() => {}}>
-                            Изменить размер изображения
+                        <button onClick={onChangeCanvasSizeHandler}>
+                            Обрезать изображение
                         </button>
                     </MenuItem>
                 </MenuItems>

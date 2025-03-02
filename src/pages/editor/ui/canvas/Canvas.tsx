@@ -5,6 +5,7 @@ import { useMouse } from '../../lib/useMouse';
 import { useEditorStore } from '../../model/editorStore';
 import { useLayersStore } from '../../model/layersStore';
 import styles from './Canvas.module.scss';
+import { ChangeSizeCanvas } from './changeSizeCanvas';
 import { getCursor } from './utils';
 
 type CanvasProps = {
@@ -16,7 +17,6 @@ export const Canvas: FC<CanvasProps> = ({ canvasRef }) => {
     const canvasState = useEditorStore((state) => state.canvas);
     const isImageWasOpened = useEditorStore((state) => state.isImageWasOpened);
     const scale = useEditorStore((state) => state.scale);
-
     const layers = useLayersStore((state) => state.layers);
     const initializeLayer = useLayersStore((state) => state.initializeLayer);
 
@@ -67,9 +67,6 @@ export const Canvas: FC<CanvasProps> = ({ canvasRef }) => {
         const selectionCanvas = selectionCanvasRef.current;
 
         if (context && canvas && canvasState && selectionCanvas) {
-            selectionCanvas.width = canvasState?.width * scale;
-            selectionCanvas.height = canvasState?.height * scale;
-
             canvas.width = canvasState.width * scale;
             canvas.height = canvasState.height * scale;
 
@@ -132,6 +129,7 @@ export const Canvas: FC<CanvasProps> = ({ canvasRef }) => {
                         height={canvasState.height}
                         className={styles.selectionCanvas}
                     ></canvas>
+                    <ChangeSizeCanvas />
                 </>
             )}
         </div>

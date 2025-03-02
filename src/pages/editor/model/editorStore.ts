@@ -14,6 +14,7 @@ type State = {
     selection: Selection;
     color: string;
     isImageWasOpened: boolean;
+    changeCanvasSizeMode: boolean;
 };
 
 type Actions = {
@@ -33,6 +34,7 @@ type Actions = {
     clearSelection: () => void;
     setColor: (color: string) => void;
     setImageWasOpened: (isImageWasOpened: boolean) => void;
+    toggleCanvasSizeMode: () => void;
 };
 
 export const useEditorStore = create<State & Actions>()((set) => ({
@@ -42,6 +44,9 @@ export const useEditorStore = create<State & Actions>()((set) => ({
         layers: false,
         scale: false,
     },
+    changeCanvasSizeMode: false,
+    toggleCanvasSizeMode: () =>
+        set((state) => ({ changeCanvasSizeMode: !state.changeCanvasSizeMode })),
     scale: 1,
     setScale: (scale: number) => set({ scale }),
     isImageWasOpened: false,
