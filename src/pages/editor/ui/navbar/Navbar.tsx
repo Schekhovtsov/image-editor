@@ -101,6 +101,7 @@ export const Navbar: FC<NavbarProps> = ({ canvasRef }) => {
     };
 
     const onChangeCanvasSizeHandler = () => {
+        toggleWindow('topbar');
         toggleCanvasSizeMode();
     };
 

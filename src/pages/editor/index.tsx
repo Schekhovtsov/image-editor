@@ -6,6 +6,7 @@ import { Footer } from './ui/footer';
 import { Layers } from './ui/layers';
 import { Navbar } from './ui/navbar';
 import { Tools } from './ui/tools';
+import { Topbar } from './ui/topbar';
 
 export const Editor = () => {
     const canvasRef = useRef<HTMLCanvasElement>(null);
@@ -13,6 +14,7 @@ export const Editor = () => {
     return (
         <>
             <Navbar canvasRef={canvasRef} />
+            <Topbar />
             <Canvas canvasRef={canvasRef} />
             <CreateWindow />
             <Tools />

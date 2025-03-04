@@ -41,7 +41,7 @@ export const Layers = () => {
             width={LAYERS_WIDTH}
             height={LAYERS_HEIGHT}
             inCenterOfScreen={false}
-            initialPosition={{ x, y: 50 }}
+            initialPosition={{ x, y: 80 }}
             title="Слои"
             bodyClassName={styles.windowContainer}
         >

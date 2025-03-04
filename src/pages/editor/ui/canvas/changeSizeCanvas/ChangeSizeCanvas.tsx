@@ -10,6 +10,7 @@ export const ChangeSizeCanvas = () => {
 
     const canvasState = useEditorStore((state) => state.canvas);
     const scale = useEditorStore((state) => state.scale);
+    const setCropState = useEditorStore((state) => state.setCrop);
 
     const canvasWidth = canvasState?.width ? canvasState?.width * scale : 0;
     const canvasHeight = canvasState?.height ? canvasState?.height * scale : 0;
@@ -18,7 +19,7 @@ export const ChangeSizeCanvas = () => {
     const [dragAnchor, setDragAnchor] = useState<string | null>(null);
     const [isMoving, setIsMoving] = useState(false);
     const [startMousePos, setStartMousePos] = useState({ x: 0, y: 0 });
-    console.log(dragAnchor);
+
     const [crop, setCrop] = useState({
         x: 0,
         y: 0,
@@ -32,7 +33,8 @@ export const ChangeSizeCanvas = () => {
 
     useEffect(() => {
         drawCropArea();
-    }, [canvasState, changeCanvasSizeMode, scale]);
+        setCropState({ width: canvasWidth, height: canvasHeight });
+    }, [canvasState, changeCanvasSizeMode, scale, canvasWidth, canvasHeight]);
 
     const drawCropArea = () => {
         const canvas = changeSizeCanvasRef.current;
@@ -140,6 +142,7 @@ export const ChangeSizeCanvas = () => {
 
                 if (newCrop.width > 10 && newCrop.height > 10) {
                     setCrop(newCrop);
+                    setCropState({ width: newCrop.width, height: newCrop.height });
                     drawCropArea();
                 }
             } else if (isMoving) {
@@ -153,6 +156,7 @@ export const ChangeSizeCanvas = () => {
                 };
 
                 setCrop(newCrop);
+                setCropState({ width: newCrop.width, height: newCrop.height });
                 setStartMousePos({ x: mouseX, y: mouseY });
                 drawCropArea();
             }
