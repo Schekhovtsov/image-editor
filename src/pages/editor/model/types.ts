@@ -1,4 +1,4 @@
-export type Window = 'create' | 'tools' | 'layers';
+export type Window = 'create' | 'tools' | 'layers' | 'topbar';
 
 export type Tool = 'move' | 'fill' | 'selection' | null;
 
