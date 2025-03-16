@@ -10,9 +10,10 @@ import { getCursor } from './utils';
 
 type CanvasProps = {
     canvasRef: RefObject<HTMLCanvasElement>;
+    changeSizeCanvasRef: RefObject<HTMLCanvasElement>;
 };
 
-export const Canvas: FC<CanvasProps> = ({ canvasRef }) => {
+export const Canvas: FC<CanvasProps> = ({ canvasRef, changeSizeCanvasRef }) => {
     const selectionCanvasRef = useRef<HTMLCanvasElement>(null);
     const canvasState = useEditorStore((state) => state.canvas);
     const isImageWasOpened = useEditorStore((state) => state.isImageWasOpened);
@@ -129,7 +130,7 @@ export const Canvas: FC<CanvasProps> = ({ canvasRef }) => {
                         height={canvasState.height}
                         className={styles.selectionCanvas}
                     ></canvas>
-                    <ChangeSizeCanvas />
+                    <ChangeSizeCanvas canvasRef={changeSizeCanvasRef} />
                 </>
             )}
         </div>

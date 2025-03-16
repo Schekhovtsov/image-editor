@@ -15,10 +15,6 @@ type State = {
     color: string;
     isImageWasOpened: boolean;
     changeCanvasSizeMode: boolean;
-    crop: {
-        width: number;
-        height: number;
-    };
 };
 
 type Actions = {
@@ -39,7 +35,6 @@ type Actions = {
     setColor: (color: string) => void;
     setImageWasOpened: (isImageWasOpened: boolean) => void;
     toggleCanvasSizeMode: () => void;
-    setCrop: ({ width, height }: { width: number; height: number }) => void;
 };
 
 export const useEditorStore = create<State & Actions>()((set) => ({
@@ -85,6 +80,4 @@ export const useEditorStore = create<State & Actions>()((set) => ({
     clearSelection: () => set({ selection: DEFAULT_SELECTION }),
     setColor: (color: string) => set({ color }),
     setImageWasOpened: (isImageWasOpened: boolean) => set({ isImageWasOpened }),
-    crop: { width: 0, height: 0 },
-    setCrop: ({ width, height }) => set({ crop: { width, height } }),
 }));

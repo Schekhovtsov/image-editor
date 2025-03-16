@@ -10,12 +10,19 @@ import { Topbar } from './ui/topbar';
 
 export const Editor = () => {
     const canvasRef = useRef<HTMLCanvasElement>(null);
+    const changeSizeCanvasRef = useRef<HTMLCanvasElement>(null);
 
     return (
         <>
             <Navbar canvasRef={canvasRef} />
-            <Topbar />
-            <Canvas canvasRef={canvasRef} />
+            <Topbar
+                canvasRef={canvasRef}
+                changeSizeCanvasRef={changeSizeCanvasRef}
+            />
+            <Canvas
+                canvasRef={canvasRef}
+                changeSizeCanvasRef={changeSizeCanvasRef}
+            />
             <CreateWindow />
             <Tools />
             <Layers />

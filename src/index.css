@@ -44,7 +44,9 @@ body {
     --background-topbar: #424242;
     --background-layer-active: #3b3b3b;
     --background-input: #4d4d4d;
+    --background-button-outline: #363636;
 
+    --border-button-outline: rgb(98, 98, 98);
     --window-border: #414141;
 
     --text-white: #f5f5f5;

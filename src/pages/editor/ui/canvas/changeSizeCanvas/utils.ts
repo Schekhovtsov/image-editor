@@ -1,3 +1,4 @@
+import { RefObject } from 'react';
 import { ANCHOR_SIZE } from './config.ts';
 
 export const getAnchors = ({
@@ -57,4 +58,37 @@ export const getAnchors = ({
         height: ANCHOR_SIZE,
         type,
     }));
+};
+
+export const drawCropArea = ({
+    canvasRef,
+    crop,
+}: {
+    canvasRef: RefObject<HTMLCanvasElement>;
+    crop: {
+        x: number;
+        y: number;
+        width: number;
+        height: number;
+    };
+}) => {
+    const canvas = canvasRef.current;
+    const context = canvas?.getContext('2d');
+
+    if (canvas && context) {
+        context.clearRect(0, 0, canvas.width, canvas.height);
+
+        context.globalCompositeOperation = 'source-over';
+        context.fillStyle = 'rgba(0, 0, 0, 0.7)';
+        context.fillRect(0, 0, canvas.width, canvas.height);
+
+        context.clearRect(crop.x, crop.y, crop.width, crop.height);
+
+        context.globalCompositeOperation = 'source-over';
+        context.fillStyle = 'white';
+
+        getAnchors(crop).forEach(({ x, y, width, height }) => {
+            context.fillRect(x, y, width, height);
+        });
+    }
 };
