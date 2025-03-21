@@ -3,9 +3,11 @@ import { useSortable } from '@dnd-kit/sortable';
 import { CSS } from '@dnd-kit/utilities';
 import clsx from 'clsx';
 import { useLayersStore } from 'pages/editor/model/layersStore';
-import { FC, type MouseEvent } from 'react';
+import { FC, type MouseEvent, useRef, useState } from 'react';
 import CrossIcon from 'shared/assets/icons/cross.svg?react';
 import EyeIcon from 'shared/assets/icons/eye.svg?react';
+import { useOpen } from 'shared/lib';
+import { ContextMenu } from 'widgets/contextMenu';
 
 import styles from './styles.module.scss';
 
@@ -24,6 +26,8 @@ export const Item: FC<ItemProps> = ({ id, name, visible }) => {
         (state) => state.changeLayerVisibility
     );
     const deleteLayer = useLayersStore((state) => state.deleteLayer);
+
+    const { isOpen, close, open } = useOpen();
 
     const {
         attributes,
@@ -45,6 +49,12 @@ export const Item: FC<ItemProps> = ({ id, name, visible }) => {
         changeActiveLayer(activeLayer === layerId ? null : layerId);
     };
 
+    const onContextMenuHandler = (event: MouseEvent<HTMLElement>) => {
+        event.preventDefault();
+        setClickEvent(event);
+        open();
+    };
+
     const toggleLayerVisibilityHandler =
         (layerId: number) => (event: MouseEvent<HTMLButtonElement>) => {
             event?.stopPropagation();
@@ -57,6 +67,8 @@ export const Item: FC<ItemProps> = ({ id, name, visible }) => {
             deleteLayer(layerId);
         };
 
+    const [clickEvent, setClickEvent] = useState<MouseEvent | null>(null);
+
     return (
         <div
             className={clsx(
@@ -67,6 +79,7 @@ export const Item: FC<ItemProps> = ({ id, name, visible }) => {
             ref={draggableRef}
             style={style}
             onClick={toggleActiveLayerHandler(id)}
+            onContextMenu={onContextMenuHandler}
         >
             <div>
                 <button
@@ -85,6 +98,20 @@ export const Item: FC<ItemProps> = ({ id, name, visible }) => {
             <button onClick={onDeleteLayerHandler(id)} title="Удалить слой">
                 <CrossIcon className={styles.crossIcon} />
             </button>
+            <ContextMenu
+                isOpen={isOpen}
+                close={close}
+                clickEvent={clickEvent}
+                buttons={() => {
+                    return (
+                        <>
+                            <button name="create" onClick={() => {}}>
+                                Фильтры
+                            </button>
+                        </>
+                    );
+                }}
+            />
         </div>
     );
 };

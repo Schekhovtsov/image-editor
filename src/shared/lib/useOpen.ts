@@ -1,6 +1,6 @@
 import { useState } from 'react';
 
-const useOpen = () => {
+export const useOpen = () => {
     const [isOpen, setIsOpen] = useState(false);
 
     const open = () => setIsOpen(true);
@@ -8,5 +8,3 @@ const useOpen = () => {
 
     return { isOpen, open, close };
 };
-
-export default useOpen;
