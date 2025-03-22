@@ -8,7 +8,7 @@ type ContextMenuProps = {
     isOpen: boolean;
     close: () => void;
     buttons: () => ReactNode;
-    clickEvent: MouseEvent<Element, globalThis.MouseEvent> | null;
+    clickEvent: MouseEvent<HTMLElement> | null;
 };
 
 export const ContextMenu: FC<ContextMenuProps> = ({

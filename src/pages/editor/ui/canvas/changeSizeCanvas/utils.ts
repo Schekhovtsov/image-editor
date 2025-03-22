@@ -1,4 +1,5 @@
 import { RefObject } from 'react';
+
 import { ANCHOR_SIZE } from './config.ts';
 
 export const getAnchors = ({

@@ -3,8 +3,9 @@ import { useSortable } from '@dnd-kit/sortable';
 import { CSS } from '@dnd-kit/utilities';
 import clsx from 'clsx';
 import { useLayersStore } from 'pages/editor/model/layersStore';
-import { FC, type MouseEvent, useRef, useState } from 'react';
+import { FC, type MouseEvent, useState } from 'react';
 import CrossIcon from 'shared/assets/icons/cross.svg?react';
+import DragIcon from 'shared/assets/icons/drag.svg?react';
 import EyeIcon from 'shared/assets/icons/eye.svg?react';
 import { useOpen } from 'shared/lib';
 import { ContextMenu } from 'widgets/contextMenu';
@@ -42,7 +43,7 @@ export const Item: FC<ItemProps> = ({ id, name, visible }) => {
         transform: CSS.Transform.toString(transform),
         transition,
         opacity: isDragging ? 0.5 : 1,
-        cursor: isDragging ? 'grabbing' : 'auto',
+        cursor: isDragging ? 'grabbing' : 'grab',
     };
 
     const toggleActiveLayerHandler = (layerId: number) => () => {
@@ -67,7 +68,12 @@ export const Item: FC<ItemProps> = ({ id, name, visible }) => {
             deleteLayer(layerId);
         };
 
-    const [clickEvent, setClickEvent] = useState<MouseEvent | null>(null);
+    const [clickEvent, setClickEvent] =
+        useState<MouseEvent<HTMLElement> | null>(null);
+
+    const onOpenFiltersHandler = (event: MouseEvent<HTMLButtonElement>) => {
+        event.stopPropagation();
+    };
 
     return (
         <div
@@ -81,6 +87,13 @@ export const Item: FC<ItemProps> = ({ id, name, visible }) => {
             onClick={toggleActiveLayerHandler(id)}
             onContextMenu={onContextMenuHandler}
         >
+            <DragIcon
+                {...listeners}
+                {...attributes}
+                width={16}
+                height={16}
+                className={styles.dragIcon}
+            />
             <div>
                 <button
                     className={styles.eyeIconButton}
@@ -94,7 +107,6 @@ export const Item: FC<ItemProps> = ({ id, name, visible }) => {
                 </button>
             </div>
             <span>{name}</span>
-            <div {...listeners} {...attributes} className={styles.dragZone} />
             <button onClick={onDeleteLayerHandler(id)} title="Удалить слой">
                 <CrossIcon className={styles.crossIcon} />
             </button>
@@ -105,7 +117,10 @@ export const Item: FC<ItemProps> = ({ id, name, visible }) => {
                 buttons={() => {
                     return (
                         <>
-                            <button name="create" onClick={() => {}}>
+                            <button
+                                name="create"
+                                onClick={onOpenFiltersHandler}
+                            >
                                 Фильтры
                             </button>
                         </>

@@ -1,6 +1,13 @@
 .container {
-    padding: 10px;
     background: var(--background-context-menu);
     border: 1px solid var(--window-border);
     box-shadow: 0 0 10px rgba(0, 0, 0, 0.5);
+
+    button {
+        padding: 5px 10px;
+
+        &:hover {
+            background-color: var(--background-navbar-button-hover);
+        }
+    }
 }

@@ -13,7 +13,7 @@ type PopoverProps = {
     close: () => void;
     children: ReactNode;
     targetRef?: RefObject<HTMLElement> | null;
-    clickEvent?: MouseEvent<Element, globalThis.MouseEvent> | null;
+    clickEvent?: MouseEvent<HTMLElement> | null;
 };
 
 export const Popover: FC<PopoverProps> = ({
@@ -36,7 +36,7 @@ export const Popover: FC<PopoverProps> = ({
         }
     };
 
-    const calculatePositionFromClick = (clickEvent: MouseEvent) => {
+    const calculatePositionFromClick = (clickEvent: MouseEvent<HTMLElement> | null) => {
         console.log(clickEvent);
         if (clickEvent) {
             setPosition({
@@ -46,7 +46,8 @@ export const Popover: FC<PopoverProps> = ({
         }
     };
 
-    const handleClickOutside = (event: MouseEvent) => {
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
+    const handleClickOutside = (event: any) => {
         if (
             popoverRef.current &&
             !popoverRef.current.contains(event.target as Node) &&

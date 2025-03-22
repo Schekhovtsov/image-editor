@@ -140,7 +140,13 @@ export const Window: FC<WindowProps> = ({
             }}
             ref={popupRef}
         >
-            <div className={styles.header} onMouseDown={onMouseDown}>
+            <div
+                className={styles.header}
+                onMouseDown={onMouseDown}
+                style={{
+                    cursor: isDragging ? 'grabbing' : 'grab',
+                }}
+            >
                 {showDragPoint && <div className={styles.dragPoint} />}
                 {title}
                 {!withoutButtons && showCloseButton && (
